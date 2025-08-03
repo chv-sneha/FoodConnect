@@ -113,39 +113,83 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {/* Generic Analysis Card */}
-            <Card className="hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
-              <CardContent className="p-8 text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-primary to-green-400 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            <Card className="hover:shadow-xl transition-all duration-300 border-2 hover:border-primary transform hover:scale-[1.02]">
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                  FREE
+                </div>
+                <div className="w-20 h-20 bg-gradient-to-r from-primary to-green-400 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Search className="text-white" size={40} />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Generic Analysis</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   Perfect for everyone! Upload any food product image and get instant ingredient breakdown, toxicity analysis, sugar/salt levels, and FSSAI verification. No registration required.
                 </p>
+                
+                {/* Feature Highlights */}
+                <div className="mb-6 space-y-2 text-left bg-green-50 p-4 rounded-lg">
+                  <div className="flex items-center text-sm text-green-800">
+                    <CheckCircle size={16} className="mr-2 text-green-600" />
+                    <span>Ingredient breakdown</span>
+                  </div>
+                  <div className="flex items-center text-sm text-green-800">
+                    <CheckCircle size={16} className="mr-2 text-green-600" />
+                    <span>Safety scoring system</span>
+                  </div>
+                  <div className="flex items-center text-sm text-green-800">
+                    <CheckCircle size={16} className="mr-2 text-green-600" />
+                    <span>FSSAI verification</span>
+                  </div>
+                </div>
+
                 <Button 
-                  className="w-full bg-primary text-white hover:bg-green-600 py-3 text-lg font-semibold"
+                  className="w-full bg-primary text-white hover:bg-green-600 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => setLocation('/generic')}
                 >
                   Try Generic Analysis
+                  <ArrowRight className="ml-2" size={20} />
                 </Button>
               </CardContent>
             </Card>
 
-            {/* Customized Analysis Card */}
-            <Card className="hover:shadow-xl transition-all duration-300 border-2 hover:border-secondary">
-              <CardContent className="p-8 text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-secondary to-blue-400 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            {/* Customized Analysis Card - Always Visible */}
+            <Card className="hover:shadow-xl transition-all duration-300 border-2 hover:border-secondary transform hover:scale-[1.02]">
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                {!isAuthenticated && (
+                  <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                    PREMIUM
+                  </div>
+                )}
+                <div className="w-20 h-20 bg-gradient-to-r from-secondary to-blue-400 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <UserPlus className="text-white" size={40} />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Customized Analysis</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   Personalized for you! Set your allergies, health conditions, and dietary preferences. Get instant alerts when products contain ingredients that could harm you.
                 </p>
+                
+                {/* Feature Highlights */}
+                <div className="mb-6 space-y-2 text-left bg-blue-50 p-4 rounded-lg">
+                  <div className="flex items-center text-sm text-blue-800">
+                    <CheckCircle size={16} className="mr-2 text-blue-600" />
+                    <span>Personalized allergen warnings</span>
+                  </div>
+                  <div className="flex items-center text-sm text-blue-800">
+                    <CheckCircle size={16} className="mr-2 text-blue-600" />
+                    <span>Health condition alerts</span>
+                  </div>
+                  <div className="flex items-center text-sm text-blue-800">
+                    <CheckCircle size={16} className="mr-2 text-blue-600" />
+                    <span>Custom dietary tracking</span>
+                  </div>
+                </div>
+
                 <Button 
-                  className="w-full bg-secondary text-white hover:bg-blue-600 py-3 text-lg font-semibold"
+                  className="w-full bg-secondary text-white hover:bg-blue-600 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => isAuthenticated ? setLocation('/customized') : setLocation('/auth')}
                 >
                   {isAuthenticated ? 'Start Personalized Scan' : 'Create Account & Start'}
+                  <ArrowRight className="ml-2" size={20} />
                 </Button>
               </CardContent>
             </Card>
