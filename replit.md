@@ -4,11 +4,26 @@
 FoodSense AI is an intelligent food safety platform that analyzes ingredient labels through image upload to provide personalized health insights and safety ratings. The platform helps users understand what they're consuming through both generic and customized analysis modes.
 
 ## Key Features
-- **Generic Analysis**: Open to all users - provides ingredient breakdown, toxicity analysis, and safety ratings
-- **Customized Analysis**: Requires user login - personalized allergen detection and health condition warnings
-- **OCR Integration**: Extracts text from food product images using Tesseract.js
-- **Safety Scoring**: Color-coded system (Green/Orange/Red) for easy understanding
-- **FSSAI Verification**: Checks Indian food safety compliance
+### Core Scanning Features
+- **Real-time Camera Scanning**: Instant scanning like PhonePe/GPay with quality enhancement for all camera types
+- **Advanced OCR**: Enhanced text extraction with image preprocessing (contrast, brightness, noise reduction)
+- **Toxicity Scoring Engine**: 0-100 scoring based on chemical load, sugar content, salt content, and preservative count
+- **Generic Analysis**: Open to all users - ingredient breakdown, toxicity analysis, safety ratings
+- **Customized Analysis**: Personalized allergen detection and health condition warnings for registered users
+
+### Advanced Features
+- **Ingredient Substitute Suggestions**: Healthier alternatives (jaggery vs sugar, coconut oil vs palm oil, etc.)
+- **Multi-language Support**: Hindi, Tamil, Bengali, Telugu, Marathi, Gujarati, Kannada with native translations
+- **Voice-based Summary**: Audio playback for non-literate users in regional languages
+- **Community Report Flagging**: Users can flag suspicious/dangerous products for community awareness
+- **Image Quality Enhancement**: Automatic enhancement for low-quality cameras using advanced algorithms
+- **Accessibility Focus**: Designed for rural users, low-end devices, and diverse literacy levels
+
+### Planned Features (Roadmap)
+- **Barcode Scanner Integration**: Auto-fetch product data to avoid OCR errors
+- **FSSAI & FDA Database Sync**: Real-time updates on product certifications and banned substances
+- **AI Chatbot Assistant**: Answer questions like "Is this good for diabetic patients?"
+- **Offline Mode**: Basic scanning and alerts for rural areas with limited internet
 
 ## Architecture
 - **Frontend**: React with TypeScript, Tailwind CSS, shadcn/ui components
@@ -38,11 +53,16 @@ FoodSense AI is an intelligent food safety platform that analyzes ingredient lab
 - Include health profile setup during registration
 
 ## Recent Changes (August 2025)
-- Updated homepage to show Generic vs Customized Analysis options
-- Implemented authentication system with login/register flows
-- Added health profile setup during registration
-- Restructured navigation based on user authentication state
-- Maintained existing color palette and design elements
+- ✅ **Real-time Camera Scanning** - Implemented PhonePe/GPay-style instant camera scanning
+- ✅ **Image Quality Enhancement** - Advanced OCR preprocessing for low-quality cameras (Gaussian blur, CLAHE, adaptive binarization)
+- ✅ **Toxicity Scoring Engine** - Comprehensive 0-100 scoring based on chemical load, sugar, salt, and additives
+- ✅ **Ingredient Substitute Suggestions** - Healthier alternatives (jaggery vs sugar, coconut oil vs palm oil)
+- ✅ **Multi-language Support** - Hindi, Tamil, Bengali, Telugu, Marathi, Gujarati, Kannada
+- ✅ **Voice-based Summary** - Audio playback for non-literate users in regional languages
+- ✅ **Community Report Flagging** - Users can flag suspicious products for community awareness
+- ✅ **Enhanced Analysis Results** - Detailed breakdown with progress bars, risk factors, recommendations
+- ✅ **Advanced Authentication** - Comprehensive health profile setup during registration
+- ✅ **Accessibility Features** - Works with any camera quality, enhanced for rural users
 
 ## Technical Stack
 - React + TypeScript + Vite

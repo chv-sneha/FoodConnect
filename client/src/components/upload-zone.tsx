@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { Camera, Upload, X, Loader2 } from 'lucide-react';
+import { Camera, Upload, X, Loader2, Scan, QrCode } from 'lucide-react';
+import { CameraScanner } from './camera-scanner';
 import { extractTextFromImage, preprocessImageForOCR } from '@/lib/ocr';
 import { parseProductName } from '@/lib/ingredient-analyzer';
 
@@ -18,6 +19,7 @@ export function UploadZone({ onImageAnalyzed, isLoading = false }: UploadZonePro
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showCameraScanner, setShowCameraScanner] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -99,6 +101,19 @@ export function UploadZone({ onImageAnalyzed, isLoading = false }: UploadZonePro
     cameraInputRef.current?.click();
   };
 
+  const openCameraScanner = () => {
+    setShowCameraScanner(true);
+  };
+
+  const handleCameraScanComplete = (result: {
+    file: File;
+    extractedText: string;
+    productName: string;
+  }) => {
+    setShowCameraScanner(false);
+    onImageAnalyzed(result);
+  };
+
   if (selectedFile && previewUrl) {
     return (
       <div className="bg-white rounded-3xl shadow-xl p-8">
@@ -154,30 +169,63 @@ export function UploadZone({ onImageAnalyzed, isLoading = false }: UploadZonePro
           Drag and drop or click to select the back side of your food package
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
-            className="bg-primary text-white hover:bg-green-600 flex items-center space-x-2"
-            onClick={(e) => {
-              e.stopPropagation();
-              openCameraDialog();
-            }}
-            disabled={isLoading}
-          >
-            <Camera size={20} />
-            <span>Take Photo</span>
-          </Button>
-          
-          <Button 
-            variant="secondary"
-            className="flex items-center space-x-2"
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Real-time Camera Scan - Primary option */}
+          <div className="sm:col-span-3">
+            <Button
+              type="button"
+              className="w-full bg-gradient-to-r from-primary to-green-500 hover:from-green-600 hover:to-green-700 text-white py-4 text-lg font-semibold shadow-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+                openCameraScanner();
+              }}
+              disabled={isLoading}
+            >
+              <Camera size={24} className="mr-3" />
+              <span>📱 Instant Camera Scan</span>
+            </Button>
+            <p className="text-center text-xs text-gray-500 mt-2">
+              Fast & accurate like PhonePe scanner • Works with any camera quality
+            </p>
+          </div>
+
+          {/* Alternative options */}
+          <Button
+            type="button"
+            variant="outline"
+            className="flex items-center justify-center space-x-2 py-3 px-4"
             onClick={(e) => {
               e.stopPropagation();
               openFileDialog();
             }}
             disabled={isLoading}
           >
-            <Upload size={20} />
-            <span>Choose File</span>
+            <Upload size={18} />
+            <span>Upload Image</span>
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="flex items-center justify-center space-x-2 py-3 px-4"
+            onClick={(e) => {
+              e.stopPropagation();
+              openCameraDialog();
+            }}
+            disabled={isLoading}
+          >
+            <Camera size={18} />
+            <span>Take Photo</span>
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="flex items-center justify-center space-x-2 py-3 px-4"
+            disabled={true}
+          >
+            <QrCode size={18} />
+            <span>Barcode (Soon)</span>
           </Button>
         </div>
       </div>
@@ -205,6 +253,14 @@ export function UploadZone({ onImageAnalyzed, isLoading = false }: UploadZonePro
           if (file) handleFileSelection(file);
         }}
       />
+
+      {/* Camera Scanner Modal */}
+      {showCameraScanner && (
+        <CameraScanner
+          onScanComplete={handleCameraScanComplete}
+          onClose={() => setShowCameraScanner(false)}
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRoute } from 'wouter';
 import { TopNavigation, BottomNavigation } from '@/components/navigation';
-import { AnalysisResults } from '@/components/analysis-results';
+import { EnhancedAnalysisResults } from '@/components/enhanced-analysis-results';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -138,11 +138,10 @@ export default function Results() {
               </Card>
             </div>
           ) : product ? (
-            <AnalysisResults
-              result={product}
-              personalizedAlerts={personalizedData?.personalizedAlerts || []}
-              onFindAlternatives={handleFindAlternatives}
-              onShare={handleShare}
+            <EnhancedAnalysisResults
+              product={product}
+              userAllergies={personalizedData?.allergies}
+              userConditions={personalizedData?.healthConditions}
             />
           ) : (
             <Card>
