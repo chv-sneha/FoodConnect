@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { TopNavigation, BottomNavigation } from '@/components/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
+import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { 
@@ -16,37 +18,50 @@ import {
   Heart, 
   Save,
   History,
-  Settings
+  Settings,
+  LogOut,
+  ArrowLeft
 } from 'lucide-react';
+import { Link } from 'wouter';
 
 export default function Profile() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { user, isAuthenticated, logout } = useAuth();
+  const [, setLocation] = useLocation();
   const [allergies, setAllergies] = useState<string[]>([]);
   const [healthConditions, setHealthConditions] = useState<string[]>([]);
 
-  // Mock user ID - in real app, this would come from auth context
-  const userId = 1;
-
-  const { data: user, isLoading } = useQuery({
-    queryKey: [`/api/users/${userId}`],
-    onSuccess: (data) => {
-      setAllergies(data?.allergies || []);
-      setHealthConditions(data?.healthConditions || []);
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setLocation('/auth');
     }
-  });
+  }, [isAuthenticated, setLocation]);
+
+  // Load user data
+  useEffect(() => {
+    if (user) {
+      setAllergies(user.allergies || []);
+      setHealthConditions(user.healthConditions || []);
+    }
+  }, [user]);
 
   const { data: scannedProducts } = useQuery({
-    queryKey: [`/api/users/${userId}/products`],
+    queryKey: [`/api/users/${user?.id}/products`],
+    enabled: !!user?.id,
   });
 
   const updateProfileMutation = useMutation({
     mutationFn: async (data: { allergies: string[]; healthConditions: string[] }) => {
-      const response = await apiRequest('PUT', `/api/users/${userId}/profile`, data);
+      if (!user?.id) throw new Error('User not found');
+      const response = await apiRequest('PUT', `/api/users/${user.id}/profile`, data);
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`/api/users/${userId}`] });
+      if (user?.id) {
+        queryClient.invalidateQueries({ queryKey: [`/api/users/${user.id}`] });
+      }
       toast({
         title: "Profile Updated",
         description: "Your health profile has been saved successfully.",
@@ -89,6 +104,10 @@ export default function Profile() {
     updateProfileMutation.mutate({ allergies, healthConditions });
   };
 
+  if (!isAuthenticated || !user) {
+    return null; // Auth redirect will handle this
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <TopNavigation />
@@ -96,12 +115,33 @@ export default function Profile() {
       <section className="py-8 px-4">
         <div className="max-w-2xl mx-auto space-y-8">
           
+          {/* Back Button */}
+          <div className="mb-6">
+            <Link href="/">
+              <Button variant="ghost" className="flex items-center space-x-2">
+                <ArrowLeft size={16} />
+                <span>Back to Home</span>
+              </Button>
+            </Link>
+          </div>
+
           {/* Profile Header */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center text-2xl">
-                <User className="text-primary mr-3" />
-                Profile
+              <CardTitle className="flex items-center justify-between text-2xl">
+                <div className="flex items-center">
+                  <User className="text-primary mr-3" />
+                  Profile
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={logout}
+                  className="text-red-600 hover:text-red-700 hover:border-red-300"
+                >
+                  <LogOut size={16} className="mr-1" />
+                  Logout
+                </Button>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -111,10 +151,13 @@ export default function Profile() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900">
-                    {user?.username || 'User'}
+                    {user.name}
                   </h3>
-                  <p className="text-gray-600">
-                    Member since {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Recently'}
+                  <p className="text-gray-600 text-sm">
+                    {user.email}
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    Member since {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Recently'}
                   </p>
                 </div>
               </div>

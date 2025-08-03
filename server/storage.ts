@@ -13,7 +13,7 @@ import {
 export interface IStorage {
   // User operations
   getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserProfile(id: number, allergies: string[], healthConditions: string[]): Promise<User | undefined>;
   
@@ -101,9 +101,9 @@ export class MemStorage implements IStorage {
     return this.users.get(id);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
+  async getUserByEmail(email: string): Promise<User | undefined> {
     return Array.from(this.users.values()).find(
-      (user) => user.username === username,
+      (user) => user.email === email,
     );
   }
 
@@ -112,6 +112,8 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id,
+      allergies: insertUser.allergies || [],
+      healthConditions: insertUser.healthConditions || [],
       createdAt: new Date()
     };
     this.users.set(id, user);
@@ -132,6 +134,7 @@ export class MemStorage implements IStorage {
     const scannedProduct: ScannedProduct = {
       ...product,
       id,
+      ingredients: product.ingredients || [],
       scannedAt: new Date()
     };
     this.scannedProducts.set(id, scannedProduct);
@@ -161,7 +164,14 @@ export class MemStorage implements IStorage {
 
   async createIngredient(ingredient: InsertIngredient): Promise<Ingredient> {
     const id = this.currentIngredientId++;
-    const newIngredient: Ingredient = { ...ingredient, id };
+    const newIngredient: Ingredient = { 
+      ...ingredient, 
+      id,
+      commonName: ingredient.commonName || null,
+      description: ingredient.description || null,
+      allergenType: ingredient.allergenType || null,
+      concerns: ingredient.concerns || []
+    };
     this.ingredients.set(id, newIngredient);
     return newIngredient;
   }

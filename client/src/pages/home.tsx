@@ -3,6 +3,7 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { TopNavigation, BottomNavigation } from '@/components/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { 
   Camera, 
   Shield, 
@@ -11,11 +12,14 @@ import {
   Languages, 
   Lightbulb,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
+  Search,
+  UserPlus
 } from 'lucide-react';
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { isAuthenticated } = useAuth();
 
   const features = [
     {
@@ -76,17 +80,19 @@ export default function Home() {
               <Button 
                 size="lg"
                 className="bg-white text-primary hover:bg-gray-100 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                onClick={() => setLocation('/scan')}
+                onClick={() => setLocation('/generic')}
               >
-                <Camera className="mr-3" size={24} />
-                Start Scanning
+                <Search className="mr-3" size={24} />
+                Generic Analysis
               </Button>
               <Button 
                 variant="outline"
                 size="lg"
                 className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold transition-all duration-300"
+                onClick={() => isAuthenticated ? setLocation('/customized') : setLocation('/auth')}
               >
-                Learn How It Works
+                <UserPlus className="mr-3" size={24} />
+                Customized Analysis
               </Button>
             </div>
           </div>
@@ -98,22 +104,66 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose FoodSense AI?
+              Choose Your Analysis Type
             </h2>
             <p className="text-xl text-gray-600">
-              Advanced AI technology made simple for everyone
+              Two powerful ways to understand your food products
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {/* Generic Analysis Card */}
+            <Card className="hover:shadow-xl transition-all duration-300 border-2 hover:border-primary">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-primary to-green-400 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                  <Search className="text-white" size={40} />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Generic Analysis</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Perfect for everyone! Upload any food product image and get instant ingredient breakdown, toxicity analysis, sugar/salt levels, and FSSAI verification. No registration required.
+                </p>
+                <Button 
+                  className="w-full bg-primary text-white hover:bg-green-600 py-3 text-lg font-semibold"
+                  onClick={() => setLocation('/generic')}
+                >
+                  Try Generic Analysis
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Customized Analysis Card */}
+            <Card className="hover:shadow-xl transition-all duration-300 border-2 hover:border-secondary">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-secondary to-blue-400 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                  <UserPlus className="text-white" size={40} />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Customized Analysis</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Personalized for you! Set your allergies, health conditions, and dietary preferences. Get instant alerts when products contain ingredients that could harm you.
+                </p>
+                <Button 
+                  className="w-full bg-secondary text-white hover:bg-blue-600 py-3 text-lg font-semibold"
+                  onClick={() => isAuthenticated ? setLocation('/customized') : setLocation('/auth')}
+                >
+                  {isAuthenticated ? 'Start Personalized Scan' : 'Create Account & Start'}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Choose FoodSense AI?</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <feature.icon className="text-white" size={32} />
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <feature.icon className="text-white" size={24} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <h4 className="text-lg font-bold text-gray-900 mb-3">{feature.title}</h4>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -215,16 +265,17 @@ export default function Home() {
             <Button 
               size="lg"
               className="bg-white text-primary hover:bg-gray-100 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              onClick={() => setLocation('/scan')}
+              onClick={() => setLocation('/generic')}
             >
-              Try Now <ArrowRight className="ml-2" />
+              Try Generic Analysis <ArrowRight className="ml-2" />
             </Button>
             <Button 
               variant="outline"
               size="lg"
               className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold transition-all duration-300"
+              onClick={() => isAuthenticated ? setLocation('/customized') : setLocation('/auth')}
             >
-              Download App
+              Try Customized Analysis
             </Button>
           </div>
         </div>

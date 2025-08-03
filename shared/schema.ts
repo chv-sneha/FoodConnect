@@ -4,8 +4,9 @@ import { z } from "zod";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  name: text("name").notNull(),
   allergies: text("allergies").array().default([]),
   healthConditions: text("health_conditions").array().default([]),
   createdAt: timestamp("created_at").defaultNow(),
@@ -36,10 +37,16 @@ export const ingredients = pgTable("ingredients", {
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
+  email: true,
   password: true,
+  name: true,
   allergies: true,
   healthConditions: true,
+});
+
+export const loginSchema = createInsertSchema(users).pick({
+  email: true,
+  password: true,
 });
 
 export const insertScannedProductSchema = createInsertSchema(scannedProducts).omit({

@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertUserSchema, insertScannedProductSchema } from "@shared/schema";
+import { insertUserSchema, insertScannedProductSchema, loginSchema } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 
@@ -30,14 +30,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register", async (req, res) => {
     try {
       const userData = insertUserSchema.parse(req.body);
-      const existingUser = await storage.getUserByUsername(userData.username);
+      const existingUser = await storage.getUserByEmail(userData.email);
       
       if (existingUser) {
-        return res.status(400).json({ message: "Username already exists" });
+        return res.status(400).json({ message: "Email already exists" });
       }
       
       const user = await storage.createUser(userData);
-      res.json({ id: user.id, username: user.username });
+      const { password, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // User login
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const loginData = loginSchema.parse(req.body);
+      const user = await storage.getUserByEmail(loginData.email);
+      
+      if (!user || user.password !== loginData.password) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+      
+      const { password, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }
