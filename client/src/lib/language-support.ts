@@ -137,7 +137,7 @@ export function translateText(key: string, languageCode: string = 'en'): string 
 export function translateAnalysisReport(analysis: any, languageCode: string): any {
   if (languageCode === 'en') return analysis;
   
-  // This would typically call a translation API
+  // This would typically call a translation API with proper authentication
   // For now, we'll translate key fields using our basic dictionary
   return {
     ...analysis,

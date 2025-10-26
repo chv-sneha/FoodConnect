@@ -1,0 +1,66 @@
+ingredient_name,toxicity_score,category,health_impact,allergen_risk,is_toxic,risk_level
+milk chocolate,15,chocolate,low,milk,0,Safe
+cocoa,10,chocolate,beneficial,none,0,Safe
+cocoa butter,5,chocolate,beneficial,none,0,Safe
+milk powder,20,dairy,low,milk,0,Safe
+whey powder,25,dairy,medium,milk,0,Safe
+milk solids,20,dairy,low,milk,0,Safe
+cocoa mass,8,chocolate,beneficial,none,0,Safe
+cocoa powder,12,chocolate,beneficial,none,0,Safe
+dark chocolate,18,chocolate,low,none,0,Safe
+white chocolate,22,chocolate,medium,milk,0,Safe
+milk,5,dairy,beneficial,milk,0,Safe
+cream,8,dairy,beneficial,milk,0,Safe
+butter,12,dairy,low,milk,0,Safe
+cheese,15,dairy,low,milk,0,Safe
+yogurt,10,dairy,beneficial,milk,0,Safe
+water,0,base,beneficial,none,0,
+wheat flour,5,grain,beneficial,gluten,0,Safe
+rice,3,grain,beneficial,none,0,Safe
+oats,8,grain,beneficial,gluten,0,Safe
+barley,10,grain,beneficial,gluten,0,Safe
+eggs,12,protein,beneficial,egg,0,Safe
+vegetable oil,18,oil,low,none,0,Safe
+sunflower oil,15,oil,low,none,0,Safe
+palm oil,25,oil,medium,none,0,Safe
+coconut oil,20,oil,low,none,0,Safe
+vanilla,5,spice,beneficial,none,0,Safe
+cinnamon,8,spice,beneficial,none,0,Safe
+cardamom,6,spice,beneficial,none,0,Safe
+ginger,7,spice,beneficial,none,0,Safe
+turmeric,3,spice,beneficial,none,0,Safe
+tomato,2,vegetable,beneficial,none,0,Safe
+onion,4,vegetable,beneficial,none,0,Safe
+garlic,6,vegetable,beneficial,none,0,Safe
+lemon,3,fruit,beneficial,none,0,Safe
+orange,5,fruit,beneficial,none,0,Safe
+sugar,45,sweetener,medium,none,0,Low Risk
+salt,40,mineral,medium,none,0,Low Risk
+corn syrup,50,sweetener,medium,corn,0,Medium Risk
+glucose,35,sweetener,low,corn,0,Low Risk
+fructose,38,sweetener,low,corn,0,Low Risk
+modified starch,30,additive,low,none,0,Low Risk
+emulsifier,28,additive,low,none,0,Low Risk
+stabilizer,32,additive,low,none,0,Low Risk
+thickener,35,additive,low,none,0,Low Risk
+preservative,40,preservative,medium,none,0,Low Risk
+artificial flavor,42,flavor,medium,none,0,Low Risk
+natural flavor,38,flavor,low,none,0,Low Risk
+food coloring,45,coloring,medium,none,0,Low Risk
+sodium,35,mineral,low,none,0,Low Risk
+potassium,33,mineral,low,none,0,Low Risk
+trans fat,95,fat,very_high,none,1,High Risk
+high fructose corn syrup,90,sweetener,very_high,corn,1,High Risk
+sodium nitrite,88,preservative,very_high,none,1,High Risk
+bha,85,preservative,high,none,1,High Risk
+bht,83,preservative,high,none,1,High Risk
+msg,82,flavor_enhancer,high,none,1,High Risk
+aspartame,80,sweetener,high,none,1,High Risk
+artificial colors,78,coloring,high,none,1,High Risk
+sodium benzoate,75,preservative,high,none,1,High Risk
+potassium bromate,72,flour_treatment,high,none,1,High Risk
+hydrogenated oil,85,fat,very_high,none,1,High Risk
+partially hydrogenated oil,87,fat,very_high,none,1,High Risk
+monosodium glutamate,80,flavor_enhancer,high,none,1,High Risk
+red dye,70,coloring,high,none,1,High Risk
+yellow dye,68,coloring,high,none,1,High Risk

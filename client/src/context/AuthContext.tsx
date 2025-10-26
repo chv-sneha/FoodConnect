@@ -1,11 +1,22 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
 
 interface User {
-  id: number;
+  uid: string;
   email: string;
   name: string;
   allergies: string[];
   healthConditions: string[];
+  age?: number;
+  activityLevel?: string;
+  healthGoal?: string;
+  dislikedIngredients?: string[];
+  cuisineType?: string;
+  dietaryPreferences?: string;
+  productCategories?: string;
+  emergencyContact?: string;
 }
 
 interface AuthContextType {
@@ -17,6 +28,14 @@ interface AuthContextType {
     name: string;
     allergies: string[];
     healthConditions: string[];
+    age?: number;
+    activityLevel?: string;
+    healthGoal?: string;
+    dislikedIngredients?: string[];
+    cuisineType?: string;
+    dietaryPreferences?: string;
+    productCategories?: string;
+    emergencyContact?: string;
   }) => Promise<boolean>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -29,33 +48,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check for stored user data on app load
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const userData = JSON.parse(storedUser);
-      setUser(userData);
-      setIsAuthenticated(true);
-    }
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+        if (userDoc.exists()) {
+          const userData = { uid: firebaseUser.uid, ...userDoc.data() } as User;
+          setUser(userData);
+          setIsAuthenticated(true);
+        }
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
+      }
+    });
+    return unsubscribe;
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        setIsAuthenticated(true);
-        localStorage.setItem('user', JSON.stringify(userData));
-        return true;
-      }
-      return false;
+      await signInWithEmailAndPassword(auth, email, password);
+      return true;
     } catch (error) {
       console.error('Login error:', error);
       return false;
@@ -68,34 +80,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     name: string;
     allergies: string[];
     healthConditions: string[];
+    age?: number;
+    activityLevel?: string;
+    healthGoal?: string;
+    dislikedIngredients?: string[];
+    cuisineType?: string;
+    dietaryPreferences?: string;
+    productCategories?: string;
+    emergencyContact?: string;
   }): Promise<boolean> => {
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        const newUser = await response.json();
-        setUser(newUser);
-        setIsAuthenticated(true);
-        localStorage.setItem('user', JSON.stringify(newUser));
-        return true;
-      }
-      return false;
+      const { password, ...userProfile } = userData;
+      const userCredential = await createUserWithEmailAndPassword(auth, userData.email, password);
+      await setDoc(doc(db, 'users', userCredential.user.uid), userProfile);
+      return true;
     } catch (error) {
       console.error('Registration error:', error);
       return false;
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (

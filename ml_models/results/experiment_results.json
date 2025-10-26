@@ -1,0 +1,47 @@
+{
+  "experiment_date": "2025-10-20T12:37:04.836648",
+  "text_classification": {
+    "naive_bayes": 0.7941989280307984,
+    "decision_tree": 0.7149191977850362,
+    "random_forest": 0.824729501322292,
+    "svm": 0.793448429931734,
+    "neural_network": 0.8478262611195142
+  },
+  "nutrition_prediction": {
+    "linear_regression": 0.6824107278245259,
+    "ridge": 0.6815515982476766,
+    "decision_tree": 0.7390827572439734,
+    "random_forest": 0.8306641721073266,
+    "xgboost": 0.8417758449154681,
+    "neural_network": 0.8861156644124497
+  },
+  "hypotheses": {
+    "H1_RF_vs_DT": {
+      "hypothesis": "Random Forest > Decision Tree for text classification",
+      "validated": true,
+      "rf_accuracy": 0.824729501322292,
+      "dt_accuracy": 0.7149191977850362,
+      "improvement_percent": 15.359820225484249
+    },
+    "H2_XGB_vs_Linear": {
+      "hypothesis": "XGBoost > Linear Regression for nutrition prediction",
+      "validated": true,
+      "xgb_r2": 0.8417758449154681,
+      "linear_r2": 0.6824107278245259,
+      "improvement_percent": 23.353254952334375
+    },
+    "H3_NN_Accuracy": {
+      "hypothesis": "Neural Networks achieve >80% accuracy",
+      "validated": true,
+      "nn_accuracy": 0.8478262611195142,
+      "threshold": 0.8
+    },
+    "H4_Ensemble_Improvement": {
+      "hypothesis": "Ensemble methods improve accuracy by >5%",
+      "validated": true,
+      "best_individual": 0.8861156644124497,
+      "simulated_ensemble": 0.9661156644124497,
+      "improvement_percent": 9.02816677471163
+    }
+  }
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "email": "test@test.com",
+    "password": "$2b$10$SUnDJ8P.NVaJ94A9.XBZg.Es1u0PfY85HWqkFtXgVLYRdbB9EpWf.",
+    "name": "Test User",
+    "allergies": [],
+    "healthConditions": [],
+    "id": 1,
+    "createdAt": "2025-08-23T21:57:00.000Z"
+  }
+]

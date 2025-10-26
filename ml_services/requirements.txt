@@ -1,0 +1,29 @@
+# Production ML Services Requirements
+
+# Core OCR and Image Processing
+opencv-python>=4.8.0
+Pillow>=10.0.0
+pytesseract>=0.3.10
+numpy>=1.24.0
+
+# Optional: EasyOCR (better multilingual support)
+easyocr>=1.7.0
+
+# Optional: Barcode detection
+pyzbar>=0.1.9
+
+# Google Vision API (optional, for cloud OCR)
+google-cloud-vision>=3.4.0
+
+# HTTP requests for API calls
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Database
+sqlite3  # Built-in with Python
+
+# Logging and utilities
+python-dotenv>=1.0.0
+
+# Optional: Advanced image processing
+scipy>=1.11.0

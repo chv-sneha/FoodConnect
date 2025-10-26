@@ -1,0 +1,21 @@
+{
+  "Dataset Info": {
+    "Total Ingredients": 40,
+    "Features": 7,
+    "Numeric Features": 2,
+    "Categorical Features": 5
+  },
+  "Toxicity Analysis": {
+    "Mean Toxicity Score": 39.375,
+    "Median Toxicity Score": 37.5,
+    "Std Deviation": 31.40283140917106,
+    "High Risk Ingredients": 9,
+    "Safe Ingredients": 7
+  },
+  "Data Quality": {
+    "Missing Values": "8",
+    "Duplicate Rows": "0",
+    "Outliers": 0,
+    "Quality Score": "97.1%"
+  }
+}

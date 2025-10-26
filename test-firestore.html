@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Firestore</title>
+</head>
+<body>
+    <h1>Firestore Test</h1>
+    <button onclick="addData()">Add Test Data</button>
+    <button onclick="readData()">Read Data</button>
+    <div id="result"></div>
+    
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyABw5XHxlMvNros2Bp04idQfD9ROsvc6mc",
+            authDomain: "foodconnect-dc7ce.firebaseapp.com",
+            projectId: "foodconnect-dc7ce",
+            storageBucket: "foodconnect-dc7ce.firebasestorage.app",
+            messagingSenderId: "329492075093",
+            appId: "1:329492075093:web:54611482890b31991cbadc"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.addData = async () => {
+            try {
+                console.log('Attempting to add data...');
+                const docRef = await addDoc(collection(db, "users"), {
+                    name: "Test User",
+                    email: "test@example.com",
+                    createdAt: new Date().toISOString()
+                });
+                document.getElementById('result').innerHTML = `✅ Data added with ID: ${docRef.id}`;
+                console.log('Success:', docRef.id);
+            } catch (error) {
+                console.error('Full error:', error);
+                document.getElementById('result').innerHTML = `❌ Error: ${error.code} - ${error.message}`;
+            }
+        };
+        
+        window.readData = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                let data = "";
+                querySnapshot.forEach((doc) => {
+                    data += `${doc.id}: ${JSON.stringify(doc.data())}<br>`;
+                });
+                document.getElementById('result').innerHTML = data || "No data found";
+            } catch (error) {
+                document.getElementById('result').innerHTML = `❌ Error: ${error.message}`;
+            }
+        };
+    </script>
+</body>
+</html>

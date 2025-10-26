@@ -1,0 +1,206 @@
+[
+  {
+    "userId": 1,
+    "productName": "Unknown Product",
+    "imageUrl": "/uploads/image-1754588122319-382985445.jpg",
+    "extractedText": "Date, rlsin and peanut bar topped with peanuts, dipped and drizzled with\r\nmilk chocolate . Ingediens: Date Paste (44%) Peanuts (32%) (Peanuts,\r\n~~ ry Palm Oi, Glucose Syrup), Mik Chocolat (13%) (Sugar, Cocoa Butter, Skimmed\r\nVo) 1) /1) 4&1 [ & Mill Por, Cocoa Mass, Lactose, Whey pemeste rom Milk], Paim Fai,\r\nAY, Ll Oo A Whey Powder from Milk], Milk Fe Ea Spy Lecithin, Vanilla Extract)\r\n02) JA) (VY) @ Risin (10%) Flavourig, Salt.\r\n- For allergens, including cereals containing gluten, see ingredients in bold.\r\nMay contain nuts, barley, oats and wheat.\r\nMik chocolate contains milk solids 14% minimum and cocoa solids 25%\r\nTR | PLE minimum, Milk chocolate contains vegetable fats i addition to cocoa buter\r\nSuitable for vegetarians,\r\nIa , raisin and peanut bar topp@ with peanuts, “Recipe contins >75%@hte, ris and peanut. alam\r\ned and drizzled with milk chocolate : Sh\r\nPortions per pack: 4 Portion size: 32g\r\nFRUIT, NUT Nutrition Information /100g  /32g /(%\")\r\n1822K) | 583k (7%)\r\n4 436kcal | 140kcal (7%)\r\na ala v | —\r\nLi 50g | 168 (6%)\r\n2 ) 49 16g (6%)\r\nue 429 | 13g (15%) |\r\n80g | 26g |\r\ntg | 349 (7%) |\r\naz 0209 | 006g (1%) |\r\n<Q “Reference intake df an average adult (8400kJ/2000kcal). |\r\n8\r\n$\r\na) Store in a cool, dry place. For best before end date, see side of pack.\r\n=| @\r\nSli 2 dlamy\r\ng\r\nZ UK: Freepost Mars Wrigley Confectionery UK Ld.\r\nF415 '056357\"905593\"> |Posted £0800 952 0077. RL ME\r\nLEC CI RawAatAnd PO Box 3856, Dubin 4. £71890 812315,\r\n128g=4x32gC ELEN Ces sco\r\n2 2 7 a\r\nImage ID: 2M36CN7\r\nalamy eran\r\n",
+    "ingredients": [
+      "peanuts",
+      "peanut",
+      "milk",
+      "lactose",
+      "wheat",
+      "gluten",
+      "chocolate",
+      "sugar",
+      "salt",
+      "vanilla",
+      "cocoa"
+    ],
+    "analysis": {
+      "harmfulIngredients": [
+        {
+          "name": "peanuts",
+          "commonName": "peanuts",
+          "riskLevel": "high",
+          "description": "peanuts - high risk ingredient",
+          "concerns": [
+            "Severe allergic reactions",
+            "Anaphylaxis risk"
+          ]
+        },
+        {
+          "name": "peanut",
+          "commonName": "peanut",
+          "riskLevel": "high",
+          "description": "peanut - high risk ingredient",
+          "concerns": [
+            "Severe allergic reactions",
+            "Anaphylaxis risk"
+          ]
+        },
+        {
+          "name": "milk",
+          "commonName": "milk",
+          "riskLevel": "medium",
+          "description": "milk - medium risk ingredient",
+          "concerns": [
+            "Lactose intolerance",
+            "Dairy allergies"
+          ]
+        },
+        {
+          "name": "wheat",
+          "commonName": "wheat",
+          "riskLevel": "medium",
+          "description": "wheat - medium risk ingredient",
+          "concerns": [
+            "Gluten sensitivity",
+            "Celiac disease"
+          ]
+        },
+        {
+          "name": "gluten",
+          "commonName": "gluten",
+          "riskLevel": "high",
+          "description": "gluten - high risk ingredient",
+          "concerns": [
+            "Celiac disease",
+            "Gluten sensitivity"
+          ]
+        },
+        {
+          "name": "sugar",
+          "commonName": "sugar",
+          "riskLevel": "medium",
+          "description": "sugar - medium risk ingredient",
+          "concerns": [
+            "Diabetes risk",
+            "Obesity",
+            "Tooth decay"
+          ]
+        }
+      ],
+      "sugarLevel": "medium",
+      "saltLevel": "low",
+      "additiveCount": 0,
+      "preservativeCount": 0,
+      "allergenWarnings": [
+        "peanuts",
+        "peanut",
+        "gluten"
+      ],
+      "nutritionalConcerns": [],
+      "personalizedWarnings": [
+        "peanuts"
+      ]
+    },
+    "safetyScore": "Red",
+    "fssaiVerified": false,
+    "fssaiNumber": null,
+    "id": 1,
+    "scannedAt": "2025-08-07T17:35:22.328Z"
+  },
+  {
+    "userId": 1,
+    "productName": "Unknown Product",
+    "imageUrl": "/uploads/image-1754593049450-60034213.jpg",
+    "extractedText": "Date, rlsin and peanut bar topped with peanuts, dipped and drizzled with\r\nmilk chocolate . Ingediens: Date Paste (44%) Peanuts (32%) (Peanuts,\r\n~~ ry Palm Oi, Glucose Syrup), Mik Chocolat (13%) (Sugar, Cocoa Butter, Skimmed\r\nVo) 1) /1) 4&1 [ & Mill Por, Cocoa Mass, Lactose, Whey pemeste rom Milk], Paim Fai,\r\nAY, Ll Oo A Whey Powder from Milk], Milk Fe Ea Spy Lecithin, Vanilla Extract)\r\n02) JA) (VY) @ Risin (10%) Flavourig, Salt.\r\n- For allergens, including cereals containing gluten, see ingredients in bold.\r\nMay contain nuts, barley, oats and wheat.\r\nMik chocolate contains milk solids 14% minimum and cocoa solids 25%\r\nTR | PLE minimum, Milk chocolate contains vegetable fats i addition to cocoa buter\r\nSuitable for vegetarians,\r\nIa , raisin and peanut bar topp@ with peanuts, “Recipe contins >75%@hte, ris and peanut. alam\r\ned and drizzled with milk chocolate : Sh\r\nPortions per pack: 4 Portion size: 32g\r\nFRUIT, NUT Nutrition Information /100g  /32g /(%\")\r\n1822K) | 583k (7%)\r\n4 436kcal | 140kcal (7%)\r\na ala v | —\r\nLi 50g | 168 (6%)\r\n2 ) 49 16g (6%)\r\nue 429 | 13g (15%) |\r\n80g | 26g |\r\ntg | 349 (7%) |\r\naz 0209 | 006g (1%) |\r\n<Q “Reference intake df an average adult (8400kJ/2000kcal). |\r\n8\r\n$\r\na) Store in a cool, dry place. For best before end date, see side of pack.\r\n=| @\r\nSli 2 dlamy\r\ng\r\nZ UK: Freepost Mars Wrigley Confectionery UK Ld.\r\nF415 '056357\"905593\"> |Posted £0800 952 0077. RL ME\r\nLEC CI RawAatAnd PO Box 3856, Dubin 4. £71890 812315,\r\n128g=4x32gC ELEN Ces sco\r\n2 2 7 a\r\nImage ID: 2M36CN7\r\nalamy eran\r\n",
+    "ingredients": [
+      "peanuts",
+      "peanut",
+      "milk",
+      "lactose",
+      "wheat",
+      "gluten",
+      "chocolate",
+      "sugar",
+      "salt",
+      "vanilla",
+      "cocoa"
+    ],
+    "analysis": {
+      "harmfulIngredients": [
+        {
+          "name": "peanuts",
+          "commonName": "peanuts",
+          "riskLevel": "high",
+          "description": "peanuts - high risk ingredient",
+          "concerns": [
+            "Severe allergic reactions",
+            "Anaphylaxis risk"
+          ]
+        },
+        {
+          "name": "peanut",
+          "commonName": "peanut",
+          "riskLevel": "high",
+          "description": "peanut - high risk ingredient",
+          "concerns": [
+            "Severe allergic reactions",
+            "Anaphylaxis risk"
+          ]
+        },
+        {
+          "name": "milk",
+          "commonName": "milk",
+          "riskLevel": "medium",
+          "description": "milk - medium risk ingredient",
+          "concerns": [
+            "Lactose intolerance",
+            "Dairy allergies"
+          ]
+        },
+        {
+          "name": "wheat",
+          "commonName": "wheat",
+          "riskLevel": "medium",
+          "description": "wheat - medium risk ingredient",
+          "concerns": [
+            "Gluten sensitivity",
+            "Celiac disease"
+          ]
+        },
+        {
+          "name": "gluten",
+          "commonName": "gluten",
+          "riskLevel": "high",
+          "description": "gluten - high risk ingredient",
+          "concerns": [
+            "Celiac disease",
+            "Gluten sensitivity"
+          ]
+        },
+        {
+          "name": "sugar",
+          "commonName": "sugar",
+          "riskLevel": "medium",
+          "description": "sugar - medium risk ingredient",
+          "concerns": [
+            "Diabetes risk",
+            "Obesity",
+            "Tooth decay"
+          ]
+        }
+      ],
+      "sugarLevel": "medium",
+      "saltLevel": "low",
+      "additiveCount": 0,
+      "preservativeCount": 0,
+      "allergenWarnings": [
+        "peanuts",
+        "peanut",
+        "gluten"
+      ],
+      "nutritionalConcerns": [],
+      "personalizedWarnings": [
+        "peanuts"
+      ]
+    },
+    "safetyScore": "Red",
+    "fssaiVerified": false,
+    "fssaiNumber": null,
+    "id": 2,
+    "scannedAt": "2025-08-07T18:57:29.457Z"
+  }
+]

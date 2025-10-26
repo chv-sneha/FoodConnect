@@ -45,6 +45,9 @@ export default function Auth() {
   const [dietaryPreferences, setDietaryPreferences] = useState('');
   const [productCategories, setProductCategories] = useState('');
   const [emergencyContact, setEmergencyContact] = useState('');
+  const [age, setAge] = useState('');
+  const [activityLevel, setActivityLevel] = useState('');
+  const [healthGoal, setHealthGoal] = useState('');
 
   const allergyOptions = [
     'Peanuts', 'Tree Nuts', 'Dairy', 'Gluten', 'Soy', 'Eggs', 'Fish', 'Shellfish', 'Sesame'
@@ -56,6 +59,14 @@ export default function Auth() {
 
   const dietaryOptions = [
     'Vegetarian', 'Vegan', 'Keto', 'Paleo', 'Low-Carb', 'Gluten-Free', 'Halal', 'Kosher'
+  ];
+
+  const activityOptions = [
+    'Sedentary', 'Moderately Active', 'Very Active'
+  ];
+
+  const healthGoalOptions = [
+    'Maintain Weight', 'Lose Weight', 'Gain Muscle', 'Manage Diabetes', 'Improve Immunity'
   ];
 
   const toggleAllergy = (allergy: string) => {
@@ -118,7 +129,15 @@ export default function Auth() {
           password,
           name: `${firstName.trim()} ${lastName.trim()}`,
           allergies: allAllergies,
-          healthConditions: healthConditions.split(',').map(item => item.trim()).filter(item => item)
+          healthConditions: healthConditions.split(',').map(item => item.trim()).filter(item => item),
+          age: parseInt(age),
+          activityLevel,
+          healthGoal,
+          dislikedIngredients: dislikedIngredients.split(',').map(item => item.trim()).filter(item => item),
+          cuisineType,
+          dietaryPreferences,
+          productCategories,
+          emergencyContact
         });
         
         if (success) {
@@ -148,7 +167,7 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-4xl">
         {/* Back to Home */}
         <div className="mb-6">
           <Link href="/">
@@ -164,7 +183,7 @@ export default function Auth() {
           <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Leaf className="text-white" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">FoodSense AI</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Food Connect</h1>
           <p className="text-gray-600">Know What You Eat</p>
         </div>
 
@@ -227,6 +246,37 @@ export default function Auth() {
                     />
                   </div>
 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* First Name */}
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="flex items-center space-x-2">
+                        <User size={16} />
+                        <span>First Name *</span>
+                      </Label>
+                      <Input
+                        id="firstName"
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        placeholder="Enter your first name"
+                        required
+                      />
+                    </div>
+
+                    {/* Last Name */}
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name *</Label>
+                      <Input
+                        id="lastName"
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        placeholder="Enter your last name"
+                        required
+                      />
+                    </div>
+                  </div>
+
                   {/* Country */}
                   <div className="space-y-2">
                     <Label htmlFor="country">Country *</Label>
@@ -244,41 +294,63 @@ export default function Auth() {
                     </Select>
                   </div>
 
-                  {/* First Name */}
+                  {/* Age */}
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="flex items-center space-x-2">
-                      <User size={16} />
-                      <span>First Name *</span>
-                    </Label>
+                    <Label htmlFor="age">Age *</Label>
                     <Input
-                      id="firstName"
-                      type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Enter your first name"
+                      id="age"
+                      type="number"
+                      value={age}
+                      onChange={(e) => setAge(e.target.value)}
+                      placeholder="Enter your age"
+                      min="1"
+                      max="120"
                       required
                     />
                   </div>
 
-                  {/* Last Name */}
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name *</Label>
-                    <Input
-                      id="lastName"
-                      type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Enter your last name"
-                      required
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Activity Level */}
+                    <div className="space-y-2">
+                      <Label htmlFor="activityLevel">Activity Level (Optional)</Label>
+                      <Select value={activityLevel} onValueChange={setActivityLevel}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select activity level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {activityOptions.map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Health Goal */}
+                    <div className="space-y-2">
+                      <Label htmlFor="healthGoal">Health Goal (Optional)</Label>
+                      <Select value={healthGoal} onValueChange={setHealthGoal}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select health goal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {healthGoalOptions.map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
                   <Separator className="my-6" />
 
                   {/* Customized Allergy Profile Setup */}
-                  <div className="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border-l-4 border-orange-500">
+                  <div className="bg-gradient-to-r from-primary/5 to-secondary/5 p-6 rounded-xl border-l-4 border-primary">
                     <h4 className="font-bold text-gray-900 mb-4 flex items-center text-lg">
-                      <AlertTriangle className="text-orange-500 mr-2" size={24} />
+                      <AlertTriangle className="text-primary mr-2" size={24} />
                       🍎 Customized Allergy Profile Setup
                     </h4>
                     
@@ -287,11 +359,11 @@ export default function Auth() {
                       <Label className="text-sm font-semibold text-gray-700 mb-3 block">
                         Allergic Ingredients (Required)
                       </Label>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
                         {allergyOptions.map((allergy) => (
                           <label 
                             key={allergy}
-                            className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:border-orange-400 transition-colors cursor-pointer bg-white"
+                            className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:border-primary transition-colors cursor-pointer bg-white"
                           >
                             <Checkbox 
                               checked={allergies.includes(allergy)}
@@ -311,85 +383,87 @@ export default function Auth() {
                       <p className="text-xs text-gray-500 mt-1">Add other allergies not listed above, separated by commas</p>
                     </div>
 
-                    {/* Disliked Ingredients */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700 mb-2 block">
-                        Disliked Ingredients (Optional)
-                      </Label>
-                      <Textarea
-                        placeholder="e.g., ghee, coriander"
-                        value={dislikedIngredients}
-                        onChange={(e) => setDislikedIngredients(e.target.value)}
-                        rows={2}
-                      />
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Disliked Ingredients */}
+                      <div>
+                        <Label className="text-sm font-semibold text-gray-700 mb-2 block">
+                          Disliked Ingredients (Optional)
+                        </Label>
+                        <Textarea
+                          placeholder="e.g., ghee, coriander"
+                          value={dislikedIngredients}
+                          onChange={(e) => setDislikedIngredients(e.target.value)}
+                          rows={2}
+                        />
+                      </div>
 
-                    {/* Health Conditions */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700 mb-2 block">
-                        Health Conditions (Optional)
-                      </Label>
-                      <Textarea
-                        placeholder="e.g., lactose intolerance, gluten sensitivity"
-                        value={healthConditions}
-                        onChange={(e) => setHealthConditions(e.target.value)}
-                        rows={2}
-                      />
-                    </div>
+                      {/* Health Conditions */}
+                      <div>
+                        <Label className="text-sm font-semibold text-gray-700 mb-2 block">
+                          Health Conditions (Optional)
+                        </Label>
+                        <Textarea
+                          placeholder="e.g., lactose intolerance, gluten sensitivity"
+                          value={healthConditions}
+                          onChange={(e) => setHealthConditions(e.target.value)}
+                          rows={2}
+                        />
+                      </div>
 
-                    {/* Preferred Cuisine Type */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700 mb-2 block">
-                        Preferred Cuisine Type (Optional)
-                      </Label>
-                      <Input
-                        placeholder="e.g., Indian, Vegan, Continental"
-                        value={cuisineType}
-                        onChange={(e) => setCuisineType(e.target.value)}
-                      />
-                    </div>
+                      {/* Preferred Cuisine Type */}
+                      <div>
+                        <Label className="text-sm font-semibold text-gray-700 mb-2 block">
+                          Preferred Cuisine Type (Optional)
+                        </Label>
+                        <Input
+                          placeholder="e.g., Indian, Vegan, Continental"
+                          value={cuisineType}
+                          onChange={(e) => setCuisineType(e.target.value)}
+                        />
+                      </div>
 
-                    {/* Dietary Preferences */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700 mb-2 block">
-                        Dietary Preferences *
-                      </Label>
-                      <Select value={dietaryPreferences} onValueChange={setDietaryPreferences}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="--Select--" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {dietaryOptions.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                      {/* Dietary Preferences */}
+                      <div>
+                        <Label className="text-sm font-semibold text-gray-700 mb-2 block">
+                          Dietary Preferences *
+                        </Label>
+                        <Select value={dietaryPreferences} onValueChange={setDietaryPreferences}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="--Select--" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {dietaryOptions.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    {/* Preferred Product Categories */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700 mb-2 block">
-                        Preferred Product Categories (Optional)
-                      </Label>
-                      <Input
-                        placeholder="e.g., Snacks, Dairy, Beverages"
-                        value={productCategories}
-                        onChange={(e) => setProductCategories(e.target.value)}
-                      />
-                    </div>
+                      {/* Preferred Product Categories */}
+                      <div>
+                        <Label className="text-sm font-semibold text-gray-700 mb-2 block">
+                          Preferred Product Categories (Optional)
+                        </Label>
+                        <Input
+                          placeholder="e.g., Snacks, Dairy, Beverages"
+                          value={productCategories}
+                          onChange={(e) => setProductCategories(e.target.value)}
+                        />
+                      </div>
 
-                    {/* Emergency Contact */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700 mb-2 block">
-                        Emergency Contact for Allergy Alerts (Optional)
-                      </Label>
-                      <Input
-                        placeholder="Phone number or email"
-                        value={emergencyContact}
-                        onChange={(e) => setEmergencyContact(e.target.value)}
-                      />
+                      {/* Emergency Contact */}
+                      <div>
+                        <Label className="text-sm font-semibold text-gray-700 mb-2 block">
+                          Emergency Contact for Allergy Alerts (Optional)
+                        </Label>
+                        <Input
+                          placeholder="Phone number or email"
+                          value={emergencyContact}
+                          onChange={(e) => setEmergencyContact(e.target.value)}
+                        />
+                      </div>
                     </div>
                   </div>
                 </>

@@ -2,27 +2,36 @@ import { useQuery } from '@tanstack/react-query';
 import { useRoute } from 'wouter';
 import { TopNavigation, BottomNavigation } from '@/components/navigation';
 import { EnhancedAnalysisResults } from '@/components/enhanced-analysis-results';
+import CustomizedAnalysisReport from '@/components/CustomizedAnalysisReport';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Results() {
   const [match, params] = useRoute('/results/:id');
   const productId = params?.id;
+  const { user } = useAuth();
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: [`/api/products/${productId}`],
     enabled: !!productId,
+    retry: 1,
   });
 
   const { data: personalizedData } = useQuery({
     queryKey: [`/api/products/${productId}/personalized`],
-    enabled: !!productId,
+    enabled: !!productId && !!product?.userId,
+    retry: 1,
   });
 
-  const handleFindAlternatives = () => {
+  const handleSaveReport = () => {
+    alert('Save/Download PDF feature coming soon!');
+  };
+
+  const handleViewAlternatives = () => {
     alert('Alternative products feature coming soon!');
   };
 
@@ -38,6 +47,76 @@ export default function Results() {
       navigator.clipboard.writeText(window.location.href);
       alert('Results link copied to clipboard!');
     }
+  };
+
+  // Generate customized analysis result
+  const generateCustomizedResult = (product: any, userData: any) => {
+    const allergenWarnings = [];
+    const healthMatches = [];
+    
+    // Check for allergen matches
+    if (userData?.allergies && product.ingredients) {
+      const ingredientsList = Array.isArray(product.ingredients) 
+        ? product.ingredients 
+        : product.ingredients.split(',').map(i => i.trim());
+      
+      for (const allergy of userData.allergies) {
+        const hasAllergen = ingredientsList.some(ingredient => 
+          ingredient.toLowerCase().includes(allergy.toLowerCase())
+        );
+        
+        if (hasAllergen) {
+          allergenWarnings.push({
+            ingredient: allergy,
+            severity: 'high' as const,
+            message: `Contains ${allergy} – ⚠️ You're allergic!`
+          });
+        }
+      }
+    }
+
+    // Health goal analysis
+    if (userData?.healthGoal) {
+      if (userData.healthGoal === 'Gain Muscle' && product.protein > 10) {
+        healthMatches.push({
+          aspect: 'Protein Content',
+          status: 'good' as const,
+          message: `🟢 High in Protein – Matches ${userData.healthGoal.toLowerCase()} goal`
+        });
+      }
+      if (userData.healthGoal === 'Lose Weight' && product.calories > 300) {
+        healthMatches.push({
+          aspect: 'Calorie Content',
+          status: 'bad' as const,
+          message: `🔴 High in Calories – May not align with weight loss goal`
+        });
+      }
+    }
+
+    // Age appropriateness (simple logic)
+    const ageAppropriate = !userData?.age || userData.age >= 18 || !product.ingredients?.includes('caffeine');
+    
+    // Activity match
+    const activityMatch = userData?.activityLevel 
+      ? `Great for ${userData.activityLevel.toLowerCase()} lifestyle`
+      : 'Suitable for general consumption';
+
+    // Recommendation logic
+    let recommendation: 'avoid' | 'moderate' | 'good' = 'good';
+    if (allergenWarnings.length > 0) recommendation = 'avoid';
+    else if (healthMatches.some(m => m.status === 'bad')) recommendation = 'moderate';
+
+    return {
+      foodItem: product.productName || 'Unknown Product',
+      allergenWarnings,
+      healthMatches,
+      ageAppropriate,
+      activityMatch,
+      recommendation,
+      alternatives: recommendation === 'avoid' ? ['Almond protein bar (nut-free)', 'Rice-based snack'] : [],
+      consumptionTime: 'Snack',
+      portionSuggestion: userData?.activityLevel === 'Very Active' ? 'Full serving' : 'Half serving based on calorie needs'
+    };
   };
 
   if (!match) {
@@ -138,11 +217,19 @@ export default function Results() {
               </Card>
             </div>
           ) : product ? (
-            <EnhancedAnalysisResults
-              product={product}
-              userAllergies={personalizedData?.allergies}
-              userConditions={personalizedData?.healthConditions}
-            />
+            product.userId && user ? (
+              <CustomizedAnalysisReport
+                result={generateCustomizedResult(product, { ...personalizedData, ...user })}
+                onSaveReport={handleSaveReport}
+                onViewAlternatives={handleViewAlternatives}
+              />
+            ) : (
+              <EnhancedAnalysisResults
+                product={product}
+                userAllergies={personalizedData?.allergies}
+                userConditions={personalizedData?.healthConditions}
+              />
+            )
           ) : (
             <Card>
               <CardContent className="pt-6 text-center">

@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   AlertTriangle, 
   CheckCircle, 
@@ -13,11 +14,13 @@ import {
   RefreshCw,
   Flag,
   Heart,
-  Shield
+  Shield,
+  FileText
 } from 'lucide-react';
 import { useState } from 'react';
 import { analyzeToxicity, getToxicityScoreColor, getToxicityScoreLabel, ToxicityAnalysis } from '@/lib/toxicity-analyzer';
 import { translateText, speakAnalysisResults, SUPPORTED_LANGUAGES } from '@/lib/language-support';
+import { ComprehensiveAnalysisReport } from './ComprehensiveAnalysisReport';
 
 interface EnhancedAnalysisResultsProps {
   product: {
@@ -38,6 +41,7 @@ interface EnhancedAnalysisResultsProps {
     };
     safetyScore: string;
     toxicityAnalysis?: ToxicityAnalysis;
+    comprehensiveAnalysis?: any;
   };
   userAllergies?: string[];
   userConditions?: string[];
@@ -95,6 +99,20 @@ export function EnhancedAnalysisResults({
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      {/* Analysis Type Tabs */}
+      <Tabs defaultValue="quick" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="quick" className="flex items-center gap-2">
+            <Shield className="w-4 h-4" />
+            Quick Analysis
+          </TabsTrigger>
+          <TabsTrigger value="comprehensive" className="flex items-center gap-2">
+            <FileText className="w-4 h-4" />
+            ChatGPT-Level Report
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="quick" className="space-y-6 mt-6">
       {/* Language and Voice Controls */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-white rounded-lg shadow-sm">
         <div className="flex items-center gap-3">
@@ -204,13 +222,13 @@ export function EnhancedAnalysisResults({
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-blue-600">
-                    {product.ingredients.length}
+                    {product.ingredients ? product.ingredients.length : 0}
                   </div>
                   <div className="text-sm text-gray-600">Total Ingredients</div>
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-green-600">
-                    {Math.max(0, product.ingredients.length - toxicityAnalysis.harmfulIngredients.length)}
+                    {Math.max(0, (product.ingredients ? product.ingredients.length : 0) - (toxicityAnalysis.harmfulIngredients ? toxicityAnalysis.harmfulIngredients.length : 0))}
                   </div>
                   <div className="text-sm text-gray-600">Safe Ingredients</div>
                 </div>
@@ -221,7 +239,7 @@ export function EnhancedAnalysisResults({
       </Card>
 
       {/* Personalized Warnings */}
-      {product.analysis.personalizedWarnings.length > 0 && (
+      {product.analysis.personalizedWarnings && product.analysis.personalizedWarnings.length > 0 && (
         <Card className="border-red-200 bg-red-50">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-red-700">
@@ -231,7 +249,7 @@ export function EnhancedAnalysisResults({
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {product.analysis.personalizedWarnings.map((warning, index) => (
+              {(product.analysis.personalizedWarnings || []).map((warning, index) => (
                 <div key={index} className="flex items-center gap-2 p-3 bg-red-100 rounded-lg">
                   <XCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                   <span className="text-red-800 font-medium">
@@ -245,7 +263,7 @@ export function EnhancedAnalysisResults({
       )}
 
       {/* Harmful Ingredients */}
-      {toxicityAnalysis.harmfulIngredients.length > 0 && (
+      {toxicityAnalysis.harmfulIngredients && toxicityAnalysis.harmfulIngredients.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -255,7 +273,7 @@ export function EnhancedAnalysisResults({
           </CardHeader>
           <CardContent>
             <div className="grid gap-3">
-              {toxicityAnalysis.harmfulIngredients.map((ingredient, index) => (
+              {(toxicityAnalysis.harmfulIngredients || []).map((ingredient, index) => (
                 <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <span className="font-medium">{ingredient}</span>
@@ -278,7 +296,7 @@ export function EnhancedAnalysisResults({
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {toxicityAnalysis.recommendations.map((recommendation, index) => (
+            {(toxicityAnalysis.recommendations || []).map((recommendation, index) => (
               <div key={index} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
                 <Heart className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <span className="text-blue-800">{recommendation}</span>
@@ -318,14 +336,14 @@ export function EnhancedAnalysisResults({
       </Card>
 
       {/* Risk Factors */}
-      {toxicityAnalysis.riskFactors.length > 0 && (
+      {toxicityAnalysis.riskFactors && toxicityAnalysis.riskFactors.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle className="text-red-700">Potential Health Risks</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-2">
-              {Array.from(new Set(toxicityAnalysis.riskFactors)).map((risk, index) => (
+              {Array.from(new Set(toxicityAnalysis.riskFactors || [])).map((risk, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 text-red-500" />
                   <span className="text-red-700">{risk}</span>
@@ -335,6 +353,27 @@ export function EnhancedAnalysisResults({
           </CardContent>
         </Card>
       )}
+        </TabsContent>
+        
+        <TabsContent value="comprehensive" className="mt-6">
+          {product.comprehensiveAnalysis ? (
+            <ComprehensiveAnalysisReport analysis={product.comprehensiveAnalysis} />
+          ) : (
+            <Card>
+              <CardContent className="text-center py-8">
+                <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  Comprehensive Analysis Not Available
+                </h3>
+                <p className="text-gray-500">
+                  This product was analyzed with the basic engine. 
+                  Re-scan for ChatGPT-level comprehensive analysis.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

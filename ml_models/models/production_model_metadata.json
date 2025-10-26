@@ -1,0 +1,31 @@
+{
+  "model_name": "Decision Tree",
+  "model_type": "DecisionTreeClassifier",
+  "performance_metrics": {
+    "accuracy": 0.875,
+    "precision": 1.0,
+    "recall": 0.667,
+    "f1_score": 0.8,
+    "roc_auc": 0.833
+  },
+  "training_samples": 32,
+  "test_samples": 8,
+  "features": [
+    "toxicity_score",
+    "category_encoded",
+    "health_impact_encoded",
+    "allergen_risk_encoded",
+    "risk_level_encoded",
+    "toxicity_level",
+    "high_toxicity_flag",
+    "toxicity_score_squared",
+    "toxicity_score_normalized"
+  ],
+  "feature_count": 9,
+  "target_classes": [
+    0,
+    1
+  ],
+  "model_version": "1.0",
+  "created_date": "2025-10-18T17:56:39.398802"
+}

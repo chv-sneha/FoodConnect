@@ -1,0 +1,25 @@
+{
+  "Original Data": {
+    "Samples": 40,
+    "Features": 5,
+    "Missing Values": "8",
+    "Duplicates": "0"
+  },
+  "Feature Engineering": {
+    "Original Features": 5,
+    "Engineered Features": 9,
+    "New Features Created": 4
+  },
+  "Data Splitting": {
+    "Training Samples": 32,
+    "Test Samples": 8,
+    "Training Positive Class": "10",
+    "Test Positive Class": "3"
+  },
+  "Feature Selection": {
+    "Total Features": 9,
+    "Selected Features": 8,
+    "PCA Components": 4,
+    "PCA Variance Explained": "95.3%"
+  }
+}

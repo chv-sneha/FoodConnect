@@ -1,0 +1,9 @@
+# OCR Service Dependencies
+opencv-python==4.8.1.78
+pillow==10.0.1
+pytesseract==0.3.10
+requests==2.31.0
+numpy==1.24.3
+
+# Optional: For Google Vision API
+google-cloud-vision==3.4.4

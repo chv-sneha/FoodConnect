@@ -1,0 +1,9 @@
+,accuracy,precision,recall,f1_score,roc_auc
+Logistic Regression,0.75,1.0,0.333,0.5,1.0
+Decision Tree,0.875,1.0,0.667,0.8,0.833
+Random Forest,0.875,1.0,0.667,0.8,0.833
+XGBoost,0.875,1.0,0.667,0.8,0.833
+Hard Voting,0.875,1.0,0.667,0.8,
+Soft Voting,0.875,1.0,0.667,0.8,0.833
+Stacking,0.875,1.0,0.667,0.8,0.833
+Neural Network,0.875,1.0,0.667,0.8,0.933

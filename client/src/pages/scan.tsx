@@ -81,10 +81,14 @@ export default function Scan() {
     formData.append('productName', uploadData.productName);
     
     // Only include user ID and profile for customized analysis
-    if (isCustomized && user) {
+    if (isCustomized && user && user.id) {
       formData.append('userId', user.id.toString());
       formData.append('allergies', JSON.stringify(selectedAllergies));
       formData.append('healthConditions', JSON.stringify(selectedConditions));
+      formData.append('age', user.age?.toString() || '');
+      formData.append('activityLevel', user.activityLevel || '');
+      formData.append('healthGoal', user.healthGoal || '');
+      formData.append('dietaryPreferences', user.dietaryPreferences || '');
     }
 
     analyzeProductMutation.mutate(formData);

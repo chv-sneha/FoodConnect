@@ -1,0 +1,661 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodSense AI - Know What You Eat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981',
+                        secondary: '#3B82F6',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        safe: '#10B981',
+                        moderate: '#F59E0B',
+                        risky: '#EF4444'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #10B981 0%, #3B82F6 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .upload-zone {
+            border: 2px dashed #10B981;
+            transition: all 0.3s ease;
+        }
+        .upload-zone:hover {
+            border-color: #059669;
+            background-color: #F0FDF4;
+        }
+        .scan-animation {
+            animation: scan 2s ease-in-out infinite;
+        }
+        @keyframes scan {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-10px); opacity: 0.7; }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .safety-badge {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        .nav-item.active {
+            color: #10B981;
+            border-bottom: 2px solid #10B981;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- @COMPONENT: MobileNavigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">FoodSense AI</h1>
+                        <p class="text-xs text-gray-500">Know What You Eat</p>
+                    </div>
+                </div>
+                <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-user text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: MobileNavigation -->
+
+    <!-- @COMPONENT: HeroSection -->
+    <section class="gradient-bg text-white py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Know What You're<br>
+                    <span class="text-yellow-300">Really Eating</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed">
+                    Upload any food product image and get instant safety analysis, allergen warnings, and ingredient breakdown in simple language.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button data-event="click:startScanning" class="bg-white text-primary px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
+                        <i class="fas fa-camera text-xl"></i>
+                        <span>Start Scanning</span>
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white hover:text-primary transition-all duration-300">
+                        Learn How It Works
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- @COMPONENT: UploadInterface -->
+    <section class="py-16 px-4" id="upload-section">
+        <div class="max-w-2xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Scan Your Food Product
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Take a photo or upload the back side of any packaged food
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+                <!-- @FUNCTIONALITY: Image upload with drag-drop functionality and camera capture -->
+                <div class="upload-zone rounded-2xl p-12 text-center cursor-pointer" data-implementation="FileUpload component with camera integration">
+                    <div class="scan-animation mb-6">
+                        <i class="fas fa-camera text-6xl text-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Upload Product Image</h3>
+                    <p class="text-gray-600 mb-6">Drag and drop or click to select the back side of your food package</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-600 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-camera"></i>
+                            <span>Take Photo</span>
+                        </button>
+                        <button class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-upload"></i>
+                            <span>Choose File</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- @COMPONENT: UserPreferencesQuickSetup -->
+            <div class="bg-white rounded-3xl shadow-xl p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-user-shield text-primary mr-3"></i>
+                    Quick Health Profile
+                </h3>
+                <p class="text-gray-600 mb-6">Set your dietary restrictions and health conditions for personalized analysis</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <!-- @MAP: allergens.map(allergen => ( -->
+                    <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-xl hover:border-primary transition-colors cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-primary rounded focus:ring-primary" data-mock="true">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                            <span data-mock="true">Nuts Allergy</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-xl hover:border-primary transition-colors cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-primary rounded focus:ring-primary" data-mock="true">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                            <span data-mock="true">Dairy Intolerance</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-xl hover:border-primary transition-colors cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-primary rounded focus:ring-primary" data-mock="true">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-heart text-danger"></i>
+                            <span data-mock="true">Diabetes</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-xl hover:border-primary transition-colors cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-primary rounded focus:ring-primary" data-mock="true">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-wheat text-warning"></i>
+                            <span data-mock="true">Gluten Sensitivity</span>
+                        </span>
+                    </label>
+                    <!-- @END_MAP )) -->
+                </div>
+
+                <button class="w-full bg-secondary text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-600 transition-colors">
+                    Save Preferences & Analyze
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: UploadInterface -->
+
+    <!-- @COMPONENT: SampleAnalysisResults -->
+    <section class="py-16 px-4 bg-gray-100" id="results-demo">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    See How It Works
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Here's what you'll see after scanning a product
+                </p>
+            </div>
+
+            <!-- Sample Product Card -->
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden mb-8">
+                <div class="gradient-bg text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold" data-mock="true">Chocolate Wafers</h3>
+                            <p class="text-blue-100" data-mock="true">Scanned 2 minutes ago</p>
+                        </div>
+                        <div class="safety-badge bg-risky text-white px-4 py-2 rounded-full font-bold text-lg">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            HIGH RISK
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8">
+                    <!-- Generic Analysis -->
+                    <div class="mb-8">
+                        <h4 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                            <i class="fas fa-chart-bar text-primary mr-3"></i>
+                            General Health Analysis
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                                <i class="fas fa-cube-sugar text-4xl text-red-500 mb-3"></i>
+                                <h5 class="font-bold text-red-900 text-lg">Sugar Level</h5>
+                                <p class="text-3xl font-bold text-red-600 my-2" data-mock="true">HIGH</p>
+                                <p class="text-sm text-red-700" data-mock="true">28g per serving</p>
+                            </div>
+                            
+                            <div class="bg-orange-50 border border-orange-200 rounded-xl p-6 text-center">
+                                <i class="fas fa-salt text-4xl text-orange-500 mb-3"></i>
+                                <h5 class="font-bold text-orange-900 text-lg">Salt Level</h5>
+                                <p class="text-3xl font-bold text-orange-600 my-2" data-mock="true">MEDIUM</p>
+                                <p class="text-sm text-orange-700" data-mock="true">1.2g per serving</p>
+                            </div>
+                            
+                            <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                                <i class="fas fa-flask text-4xl text-red-500 mb-3"></i>
+                                <h5 class="font-bold text-red-900 text-lg">Additives</h5>
+                                <p class="text-3xl font-bold text-red-600 my-2" data-mock="true">HIGH</p>
+                                <p class="text-sm text-red-700" data-mock="true">5 artificial substances</p>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Ingredients -->
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <h5 class="font-bold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-list text-gray-600 mr-2"></i>
+                                Concerning Ingredients Found
+                            </h5>
+                            <!-- @MAP: harmfulIngredients.map(ingredient => ( -->
+                            <div class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900" data-mock="true">Sodium Benzoate (E211)</p>
+                                        <p class="text-sm text-gray-600" data-mock="true">Artificial preservative that may cause allergic reactions</p>
+                                    </div>
+                                </div>
+                                <span class="text-red-600 font-bold">AVOID</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900" data-mock="true">High Fructose Corn Syrup</p>
+                                        <p class="text-sm text-gray-600" data-mock="true">Linked to obesity and metabolic disorders</p>
+                                    </div>
+                                </div>
+                                <span class="text-red-600 font-bold">AVOID</span>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+
+                    <!-- Personalized Analysis -->
+                    <div class="mb-8">
+                        <h4 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                            <i class="fas fa-user-shield text-secondary mr-3"></i>
+                            Your Personal Alerts
+                        </h4>
+                        
+                        <!-- @MAP: personalAlerts.map(alert => ( -->
+                        <div class="bg-red-50 border-l-4 border-red-500 p-6 mb-4 rounded-r-xl">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-exclamation-triangle text-red-500 mr-3"></i>
+                                <h5 class="font-bold text-red-900">Diabetic Alert</h5>
+                            </div>
+                            <p class="text-red-800" data-mock="true">This product contains 28g of sugar per serving, which exceeds your daily limit. Not recommended for diabetics.</p>
+                        </div>
+                        <div class="bg-orange-50 border-l-4 border-orange-500 p-6 mb-4 rounded-r-xl">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-exclamation-circle text-orange-500 mr-3"></i>
+                                <h5 class="font-bold text-orange-900">Allergen Warning</h5>
+                            </div>
+                            <p class="text-orange-800" data-mock="true">Contains nuts (almonds) which you're allergic to. May cause allergic reactions.</p>
+                        </div>
+                        <!-- @END_MAP )) -->
+                    </div>
+
+                    <!-- FSSAI Verification -->
+                    <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                                <div>
+                                    <h5 class="font-bold text-green-900">FSSAI Verification</h5>
+                                    <p class="text-green-700" data-mock="true">License: 12345678901234 - Verified ✓</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">LEGAL</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="flex-1 bg-primary text-white py-4 rounded-xl font-semibold text-lg hover:bg-green-600 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-search"></i>
+                            <span>Find Healthier Alternatives</span>
+                        </button>
+                        <button class="flex-1 bg-gray-100 text-gray-700 py-4 rounded-xl font-semibold text-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-share"></i>
+                            <span>Share Results</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: SampleAnalysisResults -->
+
+    <!-- @COMPONENT: FeaturesSection -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Why Choose FoodSense AI?
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Advanced AI technology made simple for everyone
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- @MAP: features.map(feature => ( -->
+                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-camera text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Instant Scanning</h3>
+                    <p class="text-gray-600">Just take a photo and get results in seconds using advanced OCR technology</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-warning to-danger rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-traffic-light text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Traffic Light System</h3>
+                    <p class="text-gray-600">Easy-to-understand color coding: Green (Safe), Orange (Moderate), Red (Avoid)</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-secondary to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-shield text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Personal Alerts</h3>
+                    <p class="text-gray-600">Customized warnings based on your allergies, diabetes, and health conditions</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">FSSAI Verification</h3>
+                    <p class="text-gray-600">Automatically checks if products are legally approved and safe to consume</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-secondary rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-language text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Simple Language</h3>
+                    <p class="text-gray-600">Complex chemical names explained in plain language anyone can understand</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Smart Suggestions</h3>
+                    <p class="text-gray-600">Get recommendations for healthier alternatives to products you scan</p>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: FeaturesSection -->
+
+    <!-- @COMPONENT: HowItWorksSection -->
+    <section class="py-16 px-4 bg-gray-100">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    How It Works
+                </h2>
+                <p class="text-xl text-gray-600">
+                    From scan to insights in just 3 simple steps
+                </p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- @MAP: steps.map((step, index) => ( -->
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex-shrink-0">
+                        <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            1
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <!-- A person holding a smartphone to scan a food product label -->
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="Person scanning food product with smartphone" class="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Scan or Upload</h3>
+                        <p class="text-lg text-gray-600">Take a photo of the back side of any packaged food product or upload an image from your gallery.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+                    <div class="flex-shrink-0">
+                        <div class="w-20 h-20 bg-gradient-to-r from-secondary to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            2
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <!-- AI analyzing food ingredients and nutritional information -->
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="AI technology analyzing food data" class="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">AI Analysis</h3>
+                        <p class="text-lg text-gray-600">Our advanced AI extracts text, analyzes ingredients, checks for allergens, and verifies FSSAI compliance.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex-shrink-0">
+                        <div class="w-20 h-20 bg-gradient-to-r from-warning to-danger rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            3
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <!-- Dashboard showing health analysis results with traffic light colors -->
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="Health dashboard with analysis results" class="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Get Results</h3>
+                        <p class="text-lg text-gray-600">Receive instant health analysis with color-coded safety ratings and personalized alerts for your health conditions.</p>
+                    </div>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HowItWorksSection -->
+
+    <!-- @COMPONENT: StatsSection -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-primary mb-2" data-mock="true">10M+</div>
+                    <p class="text-gray-600 text-lg">Products Analyzed</p>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-secondary mb-2" data-mock="true">500K+</div>
+                    <p class="text-gray-600 text-lg">Health Alerts Sent</p>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-warning mb-2" data-mock="true">98%</div>
+                    <p class="text-gray-600 text-lg">Accuracy Rate</p>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-danger mb-2" data-mock="true">1M+</div>
+                    <p class="text-gray-600 text-lg">Users Protected</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: StatsSection -->
+
+    <!-- @COMPONENT: MobileBottomNavigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
+        <div class="flex justify-around items-center">
+            <button class="nav-item active flex flex-col items-center space-y-1 py-2">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-xs font-medium">Home</span>
+            </button>
+            <button class="nav-item flex flex-col items-center space-y-1 py-2 text-gray-400">
+                <i class="fas fa-camera text-xl"></i>
+                <span class="text-xs font-medium">Scan</span>
+            </button>
+            <button class="nav-item flex flex-col items-center space-y-1 py-2 text-gray-400">
+                <i class="fas fa-history text-xl"></i>
+                <span class="text-xs font-medium">History</span>
+            </button>
+            <button class="nav-item flex flex-col items-center space-y-1 py-2 text-gray-400">
+                <i class="fas fa-user text-xl"></i>
+                <span class="text-xs font-medium">Profile</span>
+            </button>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: MobileBottomNavigation -->
+
+    <!-- @COMPONENT: CallToActionSection -->
+    <section class="gradient-bg text-white py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Start Making Healthier Choices Today
+            </h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Join millions of users who trust FoodSense AI to keep them safe and informed
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-primary px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                    Download App
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white hover:text-primary transition-all duration-300">
+                    Try Web Version
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: CallToActionSection -->
+
+    <footer class="bg-gray-900 text-white py-12 px-4 mb-16 md:mb-0">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-lg"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">FoodSense AI</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">Empowering consumers to make informed food choices through AI-powered ingredient analysis and health insights.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">How it works</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 FoodSense AI. All rights reserved. Empowering healthy choices through technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (() => {
+            // Navigation functionality
+            const navItems = document.querySelectorAll('.nav-item');
+            const uploadSection = document.getElementById('upload-section');
+            
+            navItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    if (index === 1) { // Scan button
+                        uploadSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Upload zone interactions
+            const uploadZone = document.querySelector('.upload-zone');
+            if (uploadZone) {
+                uploadZone.addEventListener('click', () => {
+                    // Simulate file picker
+                    console.log('File picker opened');
+                });
+                
+                uploadZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadZone.style.backgroundColor = '#F0FDF4';
+                });
+                
+                uploadZone.addEventListener('dragleave', () => {
+                    uploadZone.style.backgroundColor = '';
+                });
+            }
+
+            // Smooth scrolling for CTA buttons
+            const startScanningBtn = document.querySelector('[data-event="click:startScanning"]');
+            if (startScanningBtn) {
+                startScanningBtn.addEventListener('click', () => {
+                    uploadSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            // Animate stats on scroll
+            const statsSection = document.querySelector('.grid .text-4xl');
+            const animateStats = () => {
+                const statsElements = document.querySelectorAll('.text-4xl');
+                statsElements.forEach(element => {
+                    if (element.getBoundingClientRect().top < window.innerHeight) {
+                        element.style.animation = 'fadeIn 1s ease-out forwards';
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateStats);
+            
+            // Initialize tooltips for educational content
+            const initTooltips = () => {
+                const tooltipElements = document.querySelectorAll('[data-tooltip]');
+                tooltipElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        // Show tooltip
+                        console.log('Tooltip shown');
+                    });
+                });
+            };
+
+            initTooltips();
+        })();
+    </script>
+</body>
+</html>

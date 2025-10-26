@@ -1,0 +1,14 @@
+{
+  "experiment_date": "2025-10-20T12:37:04.836648",
+  "best_text_model": [
+    "neural_network",
+    0.8478262611195142
+  ],
+  "best_nutrition_model": [
+    "neural_network",
+    0.8861156644124497
+  ],
+  "validated_hypotheses": 4,
+  "total_hypotheses": 4,
+  "validation_rate": 1.0
+}

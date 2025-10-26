@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Auth</title>
+</head>
+<body>
+    <h1>Test Registration</h1>
+    <input type="email" id="email" placeholder="Email" value="test123@example.com">
+    <input type="password" id="password" placeholder="Password" value="password123">
+    <button onclick="testRegister()">Register</button>
+    <button onclick="clearAuth()">Clear Auth</button>
+    <div id="result"></div>
+    
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        
+        const app = initializeApp({
+            apiKey: "AIzaSyABw5XHxlMvNros2Bp04idQfD9ROsvc6mc",
+            authDomain: "foodconnect-dc7ce.firebaseapp.com",
+            projectId: "foodconnect-dc7ce",
+            storageBucket: "foodconnect-dc7ce.firebasestorage.app",
+            messagingSenderId: "329492075093",
+            appId: "1:329492075093:web:54611482890b31991cbadc"
+        });
+        
+        const auth = getAuth(app);
+        
+        window.testRegister = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                document.getElementById('result').innerHTML = `✅ SUCCESS: ${result.user.email}`;
+            } catch (error) {
+                console.error('Full error:', error);
+                document.getElementById('result').innerHTML = `❌ ERROR: ${error.code} - ${error.message}`;
+            }
+        };
+        
+        window.clearAuth = async () => {
+            try {
+                await signOut(auth);
+                document.getElementById('result').innerHTML = 'Auth cleared';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error clearing auth';
+            }
+        };
+    </script>
+</body>
+</html>

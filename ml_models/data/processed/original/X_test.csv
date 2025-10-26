@@ -1,0 +1,9 @@
+,toxicity_score,category_encoded,health_impact_encoded,allergen_risk_encoded,risk_level_encoded,toxicity_level,high_toxicity_flag,toxicity_score_squared,toxicity_score_normalized
+20,35,1,5,3,1,1,0,1225,0.35
+27,20,8,5,2,3,0,0,400,0.2
+19,40,4,2,2,1,1,0,1600,0.4
+8,75,11,3,2,0,3,1,5625,0.75
+32,0,10,0,2,4,1,0,0,0.0
+12,55,14,3,0,2,2,0,3025,0.55
+23,25,15,5,2,1,1,0,625,0.25
+11,60,11,3,2,2,2,0,3600,0.6

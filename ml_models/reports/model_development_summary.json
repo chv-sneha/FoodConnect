@@ -1,0 +1,26 @@
+{
+  "Dataset Info": {
+    "Training Samples": 32,
+    "Test Samples": 8,
+    "Features": 9,
+    "Target Classes": 2
+  },
+  "Models Trained": {
+    "Baseline": "Logistic Regression",
+    "Tree-based": "Decision Tree, Random Forest",
+    "Boosting": "XGBoost",
+    "Total Models": 4
+  },
+  "Best Performance": {
+    "Best Accuracy": "0.875 (Decision Tree)",
+    "Best Precision": "1.000 (Logistic Regression)",
+    "Best Recall": "0.667 (Decision Tree)",
+    "Best F1-Score": "0.800 (Decision Tree)",
+    "Best ROC-AUC": "1.000 (Logistic Regression)"
+  },
+  "Recommendations": {
+    "Production Model": "Decision Tree",
+    "Reason": "Highest F1-Score (balanced precision and recall)",
+    "Alternative": "Random Forest"
+  }
+}

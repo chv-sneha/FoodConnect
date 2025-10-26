@@ -1,0 +1,77 @@
+
+> rest-express@1.0.0 dev
+> npx cross-env NODE_ENV=development tsx server/index.ts
+
+7:48:07 PM [express] 🚀 Server running on port 3004
+7:48:07 PM [express] 🤖 ML-powered food analysis ready!
+7:48:07 PM [express] 🌐 Access at: http://localhost:3004
+7:48:07 PM [express] 📸 Enhanced OCR + FSSAI validation active!
+7:48:29 PM [express] 📊 Starting generic analysis...
+7:48:29 PM [express] 🖼️ Preprocessing image for OCR...
+7:48:29 PM [express] ⚠️ Image preprocessing failed: Cannot use same file for input and output
+7:48:29 PM [express] 🔍 Extracting text with enhanced OCR...
+7:48:32 PM [express] 📝 Extracted text length: 832 characters
+7:48:32 PM [express] 🔍 First 200 chars: Benefits Haxx
+F00DS
+= Rich in antioxidants, Fiber, Calcium, Iron, Beetool Mall
+Potassium, Folate, Nitrate and Manganese
+* Improves vascular function and healthy blood flow
+* Reduces swelling, muscle s...
+7:48:32 PM [express] 📝 Found 5 ingredients: sugar, milk, oil, calcium, iron
+7:48:32 PM [express] 🤖 Analyzing ingredients with ML...
+7:48:36 PM [express] ⚠️ ML analysis failed, using fallback
+7:48:36 PM [express] ✅ Analysis complete
+4:13:29 PM [express] 📊 Starting generic analysis...
+4:13:29 PM [express] 🖼️ Preprocessing image for OCR...
+4:13:29 PM [express] ⚠️ Image preprocessing failed: Cannot use same file for input and output
+4:13:29 PM [express] 🔍 Extracting text with enhanced OCR...
+4:13:31 PM [express] 📝 Extracted text length: 832 characters
+4:13:31 PM [express] 🔍 First 200 chars: Benefits Haxx
+F00DS
+= Rich in antioxidants, Fiber, Calcium, Iron, Beetool Mall
+Potassium, Folate, Nitrate and Manganese
+* Improves vascular function and healthy blood flow
+* Reduces swelling, muscle s...
+4:13:31 PM [express] 📝 Found 5 ingredients: sugar, milk, oil, calcium, iron
+4:13:31 PM [express] 🤖 Analyzing ingredients with ML...
+4:13:37 PM [express] ⚠️ ML analysis failed, using fallback
+4:13:37 PM [express] ✅ Analysis complete
+4:14:52 PM [express] 📊 Starting generic analysis...
+4:14:52 PM [express] 🖼️ Preprocessing image for OCR...
+4:14:52 PM [express] ⚠️ Image preprocessing failed: Cannot use same file for input and output
+4:14:52 PM [express] 🔍 Extracting text with enhanced OCR...
+4:14:55 PM [express] 📝 Extracted text length: 568 characters
+4:14:55 PM [express] 🔍 First 200 chars: ALSO EXPLORE TATA Salt /
+Tah SALT LTE =
+=] @ : l/
+| 4
+\ ® 1 Po eis copie
+: Pe us ae]
+poss
+EN eee
+TH SATA RGESAT | RG
+Tri frosnsss
+Ea TET
+Er | Hom er
+= I asian. OR ts
+Et Ry
+hid P.O. Mirapur - 361 345, ...
+4:14:55 PM [express] 📝 Found 2 ingredients: salt, sodium
+4:14:55 PM [express] 🤖 Analyzing ingredients with ML...
+4:14:58 PM [express] ⚠️ ML analysis failed, using fallback
+4:14:58 PM [express] ✅ Analysis complete
+9:08:55 PM [express] 📊 Starting generic analysis...
+9:08:55 PM [express] 🖼️ Preprocessing image for OCR...
+9:08:55 PM [express] ⚠️ Image preprocessing failed: Cannot use same file for input and output
+9:08:55 PM [express] 🔍 Extracting text with enhanced OCR...
+9:08:57 PM [express] 📝 Extracted text length: 832 characters
+9:08:57 PM [express] 🔍 First 200 chars: Benefits Haxx
+F00DS
+= Rich in antioxidants, Fiber, Calcium, Iron, Beetool Mall
+Potassium, Folate, Nitrate and Manganese
+* Improves vascular function and healthy blood flow
+* Reduces swelling, muscle s...
+9:08:57 PM [express] 📝 Found 5 ingredients: sugar, milk, oil, calcium, iron
+9:08:57 PM [express] 🤖 Analyzing ingredients with ML...
+9:09:02 PM [express] ⚠️ ML analysis failed, using fallback
+9:09:02 PM [express] ✅ Analysis complete

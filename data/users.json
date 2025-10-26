@@ -1,0 +1,40 @@
+[
+  {
+    "email": "test@test.com",
+    "password": "$2b$10$SUnDJ8P.NVaJ94A9.XBZg.Es1u0PfY85HWqkFtXgVLYRdbB9EpWf.",
+    "name": "Test User",
+    "allergies": [],
+    "healthConditions": [],
+    "id": 1,
+    "createdAt": "2025-08-23T21:57:00.000Z"
+  },
+  {
+    "email": "chvsneha2310@gmail.com",
+    "password": "$2b$10$8yhQhuau6kFLsf39DazIMOm5et6RPu5atoRJDlDOxhLuj0LBILhCO",
+    "name": "chv sneha",
+    "allergies": [
+      "Soy",
+      "Sesame",
+      "walnuts"
+    ],
+    "healthConditions": [
+      "none"
+    ],
+    "id": 2,
+    "createdAt": "2025-08-23T16:45:24.383Z"
+  },
+  {
+    "email": "a@123",
+    "password": "$2b$10$keB35/F92buRfv4/JtB5IOQFDrKZJXJG4TdwTLkPUrWWBIYf91AwW",
+    "name": "ch v sneha",
+    "allergies": [
+      "Peanuts",
+      "Soy",
+      "Dairy",
+      "Fish"
+    ],
+    "healthConditions": [],
+    "id": 3,
+    "createdAt": "2025-10-18T08:52:38.260Z"
+  }
+]

@@ -35,7 +35,7 @@ export function TopNavigation() {
               <Leaf className="text-white" size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">FoodSense AI</h1>
+              <h1 className="text-xl font-bold text-gray-900">Food Connect</h1>
               <p className="text-xs text-gray-500">Know What You Eat</p>
             </div>
           </Link>

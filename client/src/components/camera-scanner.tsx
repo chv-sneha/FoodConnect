@@ -24,6 +24,14 @@ export function CameraScanner({ onScanComplete, onClose }: CameraScannerProps) {
   const [hasFlash, setHasFlash] = useState(false);
   const [flashEnabled, setFlashEnabled] = useState(false);
 
+  // Test div for slide-in-top-normal animation
+  // Remove after testing
+  const testAnimationDiv = (
+    <div className="slide-in-top-normal" style={{ background: '#e0e7ff', color: '#1e293b', padding: '12px', borderRadius: '8px', marginBottom: '16px', textAlign: 'center', fontWeight: 600 }}>
+      Slide-in-top-normal Animation Test
+    </div>
+  );
+
   const startCamera = useCallback(async () => {
     try {
       // Stop existing stream
@@ -139,13 +147,8 @@ export function CameraScanner({ onScanComplete, onClose }: CameraScannerProps) {
           });
           stopCamera();
           return;
-        }
-      }
 
-      if (ocrResult.confidence < 30) {
-        alert('Image quality too low. Please ensure good lighting and focus on the ingredient label.');
-        setIsProcessing(false);
-        return;
+        }
       }
 
       const productName = parseProductName(ocrResult.text);

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Firebase Auth</title>
+</head>
+<body>
+    <h1>Firebase Auth Debug</h1>
+    <button onclick="createUser()">Create Test User</button>
+    <button onclick="listUsers()">Check Auth State</button>
+    <div id="result"></div>
+    
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyABw5XHxlMvNros2Bp04idQfD9ROsvc6mc",
+            authDomain: "foodconnect-dc7ce.firebaseapp.com",
+            projectId: "foodconnect-dc7ce",
+            storageBucket: "foodconnect-dc7ce.firebasestorage.app",
+            messagingSenderId: "329492075093",
+            appId: "1:329492075093:web:54611482890b31991cbadc"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        window.createUser = async () => {
+            const email = `test${Date.now()}@example.com`;
+            const password = "password123";
+            
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                document.getElementById('result').innerHTML = `✅ User created: ${result.user.email}`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `❌ Error: ${error.code} - ${error.message}`;
+            }
+        };
+        
+        window.listUsers = () => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById('result').innerHTML = `Current user: ${user.email}`;
+                } else {
+                    document.getElementById('result').innerHTML = 'No user signed in';
+                }
+            });
+        };
+    </script>
+</body>
+</html>
