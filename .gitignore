@@ -1,6 +1,61 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production builds
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
 .DS_Store
-server/public
-vite.config.ts.*
-*.tar.gz
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Firebase credentials and admin scripts
+seed-ingredient-risks.js
+seed-ingredient-risks.cjs
+add-missing-collections.cjs
+check-collections.cjs
+check-collections.js
+view-data.cjs
+firebase-service-account.json
+
+# ML model files (large binary files)
+ml_models/models/*.pkl
+ml_models/models/*.h5
+ml_models/models/*.json
+
+# Upload directory
+uploads/
