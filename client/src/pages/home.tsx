@@ -59,12 +59,7 @@ export default function Home() {
     }
   ];
 
-  const stats = [
-    { value: '10M+', label: 'Products Analyzed' },
-    { value: '500K+', label: 'Health Alerts Sent' },
-    { value: '98%', label: 'Accuracy Rate' },
-    { value: '1M+', label: 'Users Protected' }
-  ];
+
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
@@ -256,86 +251,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-16 px-4 bg-gray-100">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How It Works
-            </h2>
-            <p className="text-xl text-gray-600">
-              From scan to insights in just 3 simple steps
-            </p>
-          </div>
 
-          <div className="space-y-12">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                  1
-                </div>
-              </div>
-              <div className="flex-1">
-                <img 
-                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                  alt="Person scanning food product with smartphone" 
-                  className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" 
-                />
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Scan or Upload</h3>
-                <p className="text-lg text-gray-600">Take a photo of the back side of any packaged food product or upload an image from your gallery.</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col md:flex-row-reverse items-center gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-gradient-to-r from-secondary to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                  2
-                </div>
-              </div>
-              <div className="flex-1">
-                <img 
-                  src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                  alt="AI technology analyzing food data" 
-                  className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" 
-                />
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">AI Analysis</h3>
-                <p className="text-lg text-gray-600">Our advanced AI extracts text, analyzes ingredients, checks for allergens, and verifies FSSAI compliance.</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                  3
-                </div>
-              </div>
-              <div className="flex-1">
-                <img 
-                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                  alt="Health dashboard with analysis results" 
-                  className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" 
-                />
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Get Results</h3>
-                <p className="text-lg text-gray-600">Receive instant health analysis with color-coded safety ratings and personalized alerts for your health conditions.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <div key={index} className="p-6">
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{stat.value}</div>
-                <p className="text-gray-600 text-lg">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Call to Action Section */}
       <section className="bg-gradient-to-r from-primary to-secondary text-white py-16 px-4">
