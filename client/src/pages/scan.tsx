@@ -51,12 +51,29 @@ export default function Scan() {
 
   const analyzeProductMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      const response = await apiRequest('POST', '/api/products/analyze', data);
-      return response.json();
+      // Use mock API for demo
+      const { mockAnalyzeGeneric, mockAnalyzeCustomized } = await import('@/lib/mock-api');
+      
+      if (isCustomized) {
+        return mockAnalyzeCustomized({
+          allergies: selectedAllergies,
+          dislikedIngredients: user?.dislikedIngredients || [],
+          healthConditions: selectedConditions
+        });
+      } else {
+        return mockAnalyzeGeneric();
+      }
     },
     onSuccess: (result) => {
-      // Redirect to results page with the product ID
-      setLocation(`/results/${result.id}`);
+      // Store the analysis result and redirect to results page
+      const resultId = Date.now().toString();
+      localStorage.setItem(`analysis_${resultId}`, JSON.stringify({
+        ...result,
+        id: resultId,
+        analysisType: isCustomized ? 'customized' : 'generic',
+        timestamp: new Date().toISOString()
+      }));
+      setLocation(`/results/${resultId}`);
     },
     onError: (error) => {
       console.error('Analysis failed:', error);

@@ -1,21 +1,45 @@
-module.exports = (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+// Mock API for frontend-only deployment
+export const mockAnalyzeGeneric = () => {
+  return Promise.resolve({
+    success: true,
+    product_name: "Sample Food Product",
+    final_safety_score: 72,
+    ingredientAnalysis: [
+      {
+        ingredient: "Wheat Flour",
+        safety_score: 8,
+        risk_level: "Safe",
+        reason: "Basic food ingredient, generally safe"
+      },
+      {
+        ingredient: "Sugar",
+        safety_score: 5,
+        risk_level: "Medium",
+        reason: "High sugar content, consume in moderation"
+      }
+    ],
+    safety_analysis: {
+      risk_summary: { High: 0, Medium: 1, Low: 0, Safe: 1 },
+      ingredients: [
+        { name: "Sugar", risk_level: "Medium", reason: "High sugar content" }
+      ]
+    },
+    recommendations: {
+      recommendations: ["Consume in moderation due to sugar content"]
+    },
+    timestamp: new Date().toISOString(),
+    analysis_type: 'generic'
+  });
+};
 
-  // Get user profile from request body
-  const userAllergies = req.body.allergies ? JSON.parse(req.body.allergies) : [];
-  const userDisliked = req.body.dislikedIngredients ? JSON.parse(req.body.dislikedIngredients) : [];
-  const userConditions = req.body.healthConditions ? JSON.parse(req.body.healthConditions) : [];
-
-  // Mock ingredients that might be detected
+export const mockAnalyzeCustomized = (userProfile: any) => {
   const detectedIngredients = ["Wheat Flour", "Sugar", "Palm Oil", "Salt", "Potato Starch"];
+  const userAllergies = userProfile?.allergies || [];
+  const userDisliked = userProfile?.dislikedIngredients || [];
   
-  // Check for personalized warnings
-  const personalizedWarnings = [];
+  const personalizedWarnings: string[] = [];
   
-  // Check allergies and disliked ingredients
-  [...userAllergies, ...userDisliked].forEach(item => {
+  [...userAllergies, ...userDisliked].forEach((item: string) => {
     const found = detectedIngredients.find(ing => 
       ing.toLowerCase().includes(item.toLowerCase())
     );
@@ -28,12 +52,7 @@ module.exports = (req, res) => {
     }
   });
 
-  // Health condition warnings
-  if (userConditions.includes('Diabetes') || userConditions.includes('diabetes')) {
-    personalizedWarnings.push('🔴 High sugar content - May affect diabetes management');
-  }
-
-  const mockResult = {
+  return Promise.resolve({
     success: true,
     product_name: "Customized Food Product",
     final_safety_score: personalizedWarnings.length > 0 ? 45 : 75,
@@ -56,14 +75,9 @@ module.exports = (req, res) => {
       ]
     },
     recommendations: {
-      recommendations: [
-        "Check ingredients against your health profile",
-        "Consider healthier alternatives"
-      ]
+      recommendations: ["Check ingredients against your health profile"]
     },
     timestamp: new Date().toISOString(),
     analysis_type: 'customized'
-  };
-
-  res.json(mockResult);
-}
+  });
+};
