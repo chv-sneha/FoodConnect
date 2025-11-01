@@ -1,21 +1,12 @@
 {
-  "version": 2,
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "client/dist",
   "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x",
+    "api/analyze/customized.js": {
+      "maxDuration": 30
+    },
+    "api/analyze/generic.js": {
       "maxDuration": 30
     }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  }
 }
