@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import { useMutation } from '@tanstack/react-query';
 import { TopNavigation, BottomNavigation } from '@/components/navigation';
 import { UploadZone } from '@/components/upload-zone';
@@ -8,9 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/context/AuthContext';
 import { useUserProfile } from '@/context/UserProfileContext';
-import { apiRequest } from '@/lib/queryClient';
 import { Shield, AlertTriangle, Heart, Wheat, Search, UserPlus, ArrowLeft } from 'lucide-react';
-import { Link } from 'wouter';
 
 export default function Scan() {
   const [location, setLocation] = useLocation();
@@ -25,8 +23,8 @@ export default function Scan() {
   } | null>(null);
 
   // Determine if this is generic or customized analysis
-  const isCustomized = location === '/customized';
-  const isGeneric = location === '/generic';
+  const isCustomized = location.includes('/customized');
+  const isGeneric = location.includes('/generic');
 
   // Redirect to auth if trying to access customized without login
   useEffect(() => {
@@ -100,8 +98,8 @@ export default function Scan() {
     formData.append('productName', uploadData.productName);
     
     // Only include user ID and profile for customized analysis
-    if (isCustomized && user && user.id) {
-      formData.append('userId', user.id.toString());
+    if (isCustomized && user) {
+      formData.append('userId', user.uid || 'anonymous');
       formData.append('allergies', JSON.stringify(selectedAllergies));
       formData.append('healthConditions', JSON.stringify(selectedConditions));
       formData.append('age', user.age?.toString() || '');

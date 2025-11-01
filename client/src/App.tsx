@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/context/AuthContext";
+import { UserProfileProvider } from "@/context/UserProfileContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { OfflineIndicator } from "@/hooks/useOffline";
@@ -66,13 +67,15 @@ function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <TooltipProvider>
-            <LoadingOverlay isLoading={isLoading} text="Loading...">
-              <OfflineIndicator />
-              <Toaster />
-              <Router />
-            </LoadingOverlay>
-          </TooltipProvider>
+          <UserProfileProvider>
+            <TooltipProvider>
+              <LoadingOverlay isLoading={isLoading} text="Loading...">
+                <OfflineIndicator />
+                <Toaster />
+                <Router />
+              </LoadingOverlay>
+            </TooltipProvider>
+          </UserProfileProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>
