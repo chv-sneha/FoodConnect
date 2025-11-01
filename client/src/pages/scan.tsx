@@ -33,7 +33,7 @@ export default function Scan() {
     }
   }, [isCustomized, isAuthenticated, setLocation]);
 
-  // Load user's existing allergies and conditions for customized analysis
+  // Load user's existin  // Load use  // Load user allergies and conditions for customized analysis
   useEffect(() => {
     if (isCustomized && user) {
       setSelectedAllergies(user.allergies || []);
