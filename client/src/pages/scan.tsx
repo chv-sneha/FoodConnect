@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/context/AuthContext';
+import { useUserProfile } from '@/context/UserProfileContext';
 import { apiRequest } from '@/lib/queryClient';
 import { Shield, AlertTriangle, Heart, Wheat, Search, UserPlus, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
@@ -14,6 +15,7 @@ import { Link } from 'wouter';
 export default function Scan() {
   const [location, setLocation] = useLocation();
   const { isAuthenticated, user } = useAuth();
+  const { userProfile } = useUserProfile();
   const [selectedAllergies, setSelectedAllergies] = useState<string[]>([]);
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
   const [uploadData, setUploadData] = useState<{
@@ -57,7 +59,7 @@ export default function Scan() {
       if (isCustomized) {
         return mockAnalyzeCustomized({
           allergies: selectedAllergies,
-          dislikedIngredients: user?.dislikedIngredients || [],
+          dislikedIngredients: userProfile?.dislikedIngredients || [],
           healthConditions: selectedConditions
         });
       } else {
