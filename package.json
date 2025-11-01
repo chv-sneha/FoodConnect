@@ -1,16 +1,17 @@
 {
   "name": "rest-express",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "license": "MIT",
   "scripts": {
     "dev": "npx cross-env NODE_ENV=development tsx server/index.ts",
-    "build": "vite build",
+    "build": "cd client && npm install && npm run build",
     "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview",
     "check": "tsc --noEmit",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "vercel-build": "cd client && npm install && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

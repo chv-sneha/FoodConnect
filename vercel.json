@@ -1,15 +1,13 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "client/dist/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "client/dist",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x",
+      "maxDuration": 30
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -17,12 +15,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "/$1"
     }
-  ],
-  "functions": {
-    "api/analyze/customized.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }

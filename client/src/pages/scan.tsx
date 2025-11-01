@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react';
-import { useLocation, Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { useMutation } from '@tanstack/react-query';
-import { TopNavigation, BottomNavigation } from '@/components/navigation';
-import { UploadZone } from '@/components/upload-zone';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useAuth } from '@/context/AuthContext';
+import { TopNavigation } from '@/components/TopNavigation';
+import { BottomNavigation } from '@/components/BottomNavigation';
+import { UploadZone } from '@/components/UploadZone';
+import { Link } from 'wouter';
+import { ArrowLeft, Search, UserPlus, Shield, AlertTriangle, Heart, Wheat } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 import { useUserProfile } from '@/context/UserProfileContext';
-import { Shield, AlertTriangle, Heart, Wheat, Search, UserPlus, ArrowLeft } from 'lucide-react';
 
-export default function Scan() {
-  const [location, setLocation] = useLocation();
-  const { isAuthenticated, user } = useAuth();
+interface ScanPageProps {
+  isCustomized?: boolean;
+}
+
+export function ScanPage({ isCustomized = false }: ScanPageProps) {
+  const [, setLocation] = useLocation();
+  const { user } = useAuth();
   const { userProfile } = useUserProfile();
   const [selectedAllergies, setSelectedAllergies] = useState<string[]>([]);
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
@@ -22,18 +28,7 @@ export default function Scan() {
     productName: string;
   } | null>(null);
 
-  // Determine if this is generic or customized analysis
-  const isCustomized = location.includes('/customized');
-  const isGeneric = location.includes('/generic');
-
-  // Redirect to auth if trying to access customized without login
-  useEffect(() => {
-    if (isCustomized && !isAuthenticated) {
-      setLocation('/auth');
-    }
-  }, [isCustomized, isAuthenticated, setLocation]);
-
-  // Load user's existin  // Load use  // Load user allergies and conditions for customized analysis
+  // Load user allergies and conditions for customized analysis
   useEffect(() => {
     if (isCustomized && user) {
       setSelectedAllergies(user.allergies || []);
